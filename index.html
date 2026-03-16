@@ -3,37 +3,182 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('multi-step-form');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const proceedBtn = document.getElementById('proceed-btn');
+
+    const portalId = 'YOUR_PORTAL_ID';
+    const formId = 'YOUR_FORM_ID';
+
+    async function submitToHubSpot(data) {
+      const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+      const fields = Object.keys(data).map(key => ({
+        name: key,
+        value: data[key]
+      }));
+
+      const body = {
+        fields,
+        context: {
+          pageUri: window.location.href,
+          pageName: document.title
+        }
+      };
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+        return response.ok;
+      } catch (error) {
+        console.error('HubSpot submission error:', error);
+        return false;
+      }
+    }
+
+    proceedBtn.addEventListener('click', async () => {
+      const step1Inputs = step1.querySelectorAll('input');
+      let allValid = true;
+      const step1Data = {};
+
+      step1Inputs.forEach(input => {
+        if (!input.checkValidity()) {
+          input.reportValidity();
+          allValid = false;
+        } else {
+          step1Data[input.name] = input.value;
+        }
+      });
+
+      if (allValid) {
+        await submitToHubSpot(step1Data);
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+        if (formTitle) formTitle.textContent = 'Additional Information';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      const success = await submitToHubSpot(data);
+      
+      if (success) {
+        form.parentElement.innerHTML = `
+          <div class="text-center py-10 px-6 bg-green-50/50 dark:bg-green-900/10 rounded-2xl border-2 border-green-100 dark:border-green-900/30 shadow-xl shadow-green-500/10 animate-[fadeIn_0.5s_ease-out]">
+<div class="mb-6 flex justify-center">
+<div class="bg-green-100 dark:bg-green-800 rounded-full p-6 animate-[scaleUp_0.4s_ease-out] shadow-inner">
+<span class="material-symbols-outlined text-7xl text-green-600 dark:text-green-400 block">check_circle</span>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-4 text-[#000080] dark:text-white">Enquiry Submitted Successfully!</h3>
+<p class="text-slate-600 dark:text-slate-300 max-w-[320px] mx-auto leading-relaxed">
+              Thank you for your interest. Our admissions team will be in touch with you shortly.
+            </p>
+</div>
+        `;
+      }
+    });
+  });</script>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#000080",
-                        "accent": "#D2010D",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#000033",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
+<script>document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('multi-step-form');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const proceedBtn = document.getElementById('proceed-btn');
+
+    const portalId = 'YOUR_PORTAL_ID';
+    const formId = 'YOUR_FORM_ID';
+
+    async function submitToHubSpot(data) {
+      const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+      const fields = Object.keys(data).map(key => ({
+        name: key,
+        value: data[key]
+      }));
+
+      const body = {
+        fields,
+        context: {
+          pageUri: window.location.href,
+          pageName: document.title
         }
-    </script>
+      };
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+        return response.ok;
+      } catch (error) {
+        console.error('HubSpot submission error:', error);
+        return false;
+      }
+    }
+
+    proceedBtn.addEventListener('click', async () => {
+      const step1Inputs = step1.querySelectorAll('input');
+      let allValid = true;
+      const step1Data = {};
+
+      step1Inputs.forEach(input => {
+        if (!input.checkValidity()) {
+          input.reportValidity();
+          allValid = false;
+        } else {
+          step1Data[input.name] = input.value;
+        }
+      });
+
+      if (allValid) {
+        await submitToHubSpot(step1Data);
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+        if (formTitle) formTitle.textContent = 'Additional Information';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      const success = await submitToHubSpot(data);
+      
+      if (success) {
+        // Reset form and return to Step 1
+        form.reset();
+        step2.classList.add('hidden');
+        step1.classList.remove('hidden');
+        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+        if (formTitle) formTitle.textContent = 'Request Information';
+      }
+    });
+  });</script>
 <style>
         body {
             font-family: "Public Sans", sans-serif;
         }
     </style>
-</head>
+<style></style></head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md"><div class="bg-primary text-white text-[10px] sm:text-xs py-2"><div class="max-w-7xl mx-auto px-4 flex justify-between items-center"><span>admin@wiseoaks.sg | 65189161</span><div class="flex gap-4"><span>Student/ Parent Login</span><span>FAQ's</span></div></div></div>
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex h-16 items-center justify-between">
 <div class="flex items-center gap-2"><img alt="Wise Oaks Logo" class="w-auto h-16" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXUrN5DdA18S0yNImGsCsUG_GfXgYTSgUmoLnfCx2kkDBZdXGheIj7wxLhYtKOqG7uW7-RFUrA2menY7cor5ZKJm0Wd-jUKsGcocgAuMbQrhwGOmu43pjsGrXNmgtvIxlk-_lSYguyHSvMczr0ue2Z5vJ2llRVA_wZhO6cTyJWa1bu2Faqe5v6f1JUPZJhJHhhpAHtqewolxq7ysw5EJ_-6NrexJdIyxNA6JpMHpa8clJji0pPXaGUNrzYi-cQ4m-z_BtlSdg_X-M"/></div>
@@ -45,9 +190,6 @@
 </nav>
 <div class="flex items-center gap-4">
 <button class="hidden sm:block text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-primary/90 transition-all bg-accent">INQUIRE</button>
-<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
-<span class="material-symbols-outlined text-slate-500">person</span>
-</div>
 </div>
 </div>
 </div>
@@ -64,10 +206,30 @@
 <div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-2xl max-w-md mx-auto lg:mx-0 border border-slate-100 dark:border-slate-800">
 <h3 class="text-2xl font-bold mb-2">Request Information</h3>
 <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm">Start your journey with us today. Fill out the form below to get started.</p>
-<form class="space-y-4" id="multi-step-form"><div class="space-y-4">
+<form class="space-y-4" id="multi-step-form"><div class="space-y-4" id="step-1">
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name</label>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="fullname" placeholder="Your Name" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name of Student</label>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="student_name" placeholder="Student's Full Name" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Email</label>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="email" placeholder="email@example.com" required="" type="email"/>
+</div>
+<button class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 bg-red-600 hover:bg-red-700" id="proceed-btn" type="button">Proceed</button>
+</div>
+<div class="space-y-4 hidden" id="step-2">
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact no.</label>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone" placeholder="+65 0000 0000" required="" type="tel"/>
+</div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Residential Status</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status">
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status" required="">
+<option disabled="" selected="" value="">Click for Options</option>
 <option>Singapore Citizen</option>
 <option>Singapore Permanent Resident</option>
 <option>Dependent Pass</option>
@@ -76,20 +238,18 @@
 </select>
 </div>
 <div>
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="fullname" placeholder="Your Name" required="" type="text"/>
-</div>
-<div>
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Email</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="email" placeholder="email@example.com" required="" type="email"/>
-</div>
-<div>
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact no.</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone" placeholder="+65 0000 0000" required="" type="tel"/>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select a campus</label>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus" required="">
+<option disabled="" selected="" value="">Click for Options</option>
+<option>Bukit Timah campus</option>
+<option>Valley Point Campus</option>
+<option>Upper Serangoon Road Campus</option>
+</select>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select Grade</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade">
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade" required="">
+<option disabled="" selected="" value="">Click for Options</option>
 <option>Grade 1</option>
 <option>Grade 2</option>
 <option>Grade 3</option>
@@ -101,18 +261,10 @@
 </select>
 </div>
 <div>
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select a campus</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus">
-<option>Bukit Timah campus</option>
-<option>Valley Point Campus</option>
-<option>Upper Serangoon Road Campus</option>
-</select>
-</div>
-<div>
-<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Feedback</label>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Feedback (Optional)</label>
 <textarea class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="message" placeholder="Your feedback..." rows="3"></textarea>
 </div>
-<button class="w-full text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 bg-accent" type="submit">Submit Enquiry</button>
+<button class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-red-600/20 bg-red-600 hover:bg-red-700" type="submit">Submit Details</button>
 </div></form>
 </div>
 </div>
@@ -336,62 +488,82 @@
 </div>
 </footer>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
+<script>document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('multi-step-form');
-    const fields = form.querySelectorAll('input, select, textarea');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const proceedBtn = document.getElementById('proceed-btn');
 
-    // HubSpot Configuration Placeholders
     const portalId = 'YOUR_PORTAL_ID';
     const formId = 'YOUR_FORM_ID';
 
-    async function submitToHubSpot(data, source) {
-      console.log(`Data captured via ${source}:`, data);
-      // Actual HubSpot API implementation would use portalId and formId here
-      /*
+    async function submitToHubSpot(data) {
       const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+      const fields = Object.keys(data).map(key => ({
+        name: key,
+        value: data[key]
+      }));
+
+      const body = {
+        fields,
+        context: {
+          pageUri: window.location.href,
+          pageName: document.title
+        }
+      };
+
       try {
-        await fetch(endpoint, {
+        const response = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            fields: Object.entries(data).map(([name, value]) => ({ name, value })),
-            context: { pageUri: window.location.href, pageName: document.title }
-          })
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
         });
+        return response.ok;
       } catch (error) {
-        console.error('HubSpot Submission Error:', error);
+        console.error('HubSpot submission error:', error);
+        return false;
       }
-      */
     }
 
-    // Simulate 'every step' storage by capturing data when fields lose focus (blur)
-    fields.forEach(field => {
-      field.addEventListener('blur', () => {
-        if (field.value.trim() !== '') {
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          submitToHubSpot(data, 'field_blur');
+    proceedBtn.addEventListener('click', async () => {
+      const step1Inputs = step1.querySelectorAll('input');
+      let allValid = true;
+      const step1Data = {};
+
+      step1Inputs.forEach(input => {
+        if (!input.checkValidity()) {
+          input.reportValidity();
+          allValid = false;
+        } else {
+          step1Data[input.name] = input.value;
         }
       });
+
+      if (allValid) {
+        await submitToHubSpot(step1Data);
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+        if (formTitle) formTitle.textContent = 'Additional Information';
+      }
     });
 
-    // Handle final form submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       
-      await submitToHubSpot(data, 'final_submit');
+      const success = await submitToHubSpot(data);
       
-      // Display success message after submission
-      form.parentElement.innerHTML = `
-        <div class="text-center py-10">
-          <span class="material-symbols-outlined text-green-500 text-6xl mb-4">check_circle</span>
-          <h3 class="text-2xl font-bold mb-2">Thank You!</h3>
-          <p class="text-slate-600 dark:text-slate-400">Your request has been received. Our admissions team will contact you shortly.</p>
-        </div>
-      `;
+      if (success) {
+        // Reset form and return to Step 1
+        form.reset();
+        step2.classList.add('hidden');
+        step1.classList.remove('hidden');
+        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+        if (formTitle) formTitle.textContent = 'Request Information';
+      }
     });
-  });
-</script></body></html>
+  });</script></body></html>
