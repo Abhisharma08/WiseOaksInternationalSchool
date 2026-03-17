@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+body {
+  font-family: "Public Sans", sans-serif;
+}
+
+:root {
+  --accent: #FB3C3D;
+  --primary: #000080;
+  --background-light: #f9f9f9;
+  --background-dark: #0f172a;
+}
+
+.bg-accent { background-color: var(--accent); }
+.text-accent { color: var(--accent); }
+.text-primary { color: var(--primary); }
+.bg-primary { background-color: var(--primary); }
+.bg-background-light { background-color: var(--background-light); }
+.bg-background-dark { background-color: var(--background-dark); }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-2"><img alt="Wise Oaks Logo" class="w-auto h-16" src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"/></div>
+<h2 class="text-lg font-bold hidden sm:block">Wise Oaks International School</h2>
+</div>
+</div>
+</header>
+
+<main class="flex-1 flex items-center justify-center py-20 px-4">
+<div class="max-w-2xl w-full text-center">
+<div class="mb-8">
+<div class="flex justify-center mb-6">
+<div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-green-800 text-8xl">check_circle</span>
+</div>
+</div>
+<h1 class="text-4xl md:text-5xl font-bold mb-4 text-black ">Thank You!</h1>
+<p class="text-xl text-slate-900 mb-6">
+Your information has been successfully submitted. <br/> We're excited to help you start your journey with Wise Oaks!
+</p>
+</div>
+
+<div class="bg-primary p-8 rounded-xl shadow-lg border border-slate-200 mb-8">
+<h2 class="text-2xl font-bold mb-6 text-white">What's Next?</h2>
+<div class="space-y-6 text-left">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">1</div>
+<div>
+<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Review Your Information</h3>
+<p class="text-slate-100">We've received your details and our admissions team will review your application.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">2</div>
+<div>
+<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Expect Contact Soon</h3>
+<p class="text-slate-100">Our team will reach out to you within 2-3 business days to discuss next steps.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">3</div>
+<div>
+<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Schedule a Campus Visit</h3>
+<p class="text-slate-100">Get to know our facilities and meet our team at one of our campuses.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-primary border border-blue-200 dark:border-slate-700 rounded-xl p-6 mb-8">
+<h3 class="font-bold text-lg mb-4 text-white">Contact Information</h3>
+<div class="space-y-3 text-left">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white">mail</span>
+<div>
+<p class="text-base text-white">Email</p>
+<a href="mailto:admin@wiseoaks.sg" class="font-semibold text-accent hover:underline">admin@wiseoaks.sg</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white">call</span>
+<div>
+<p class="text-base text-white">Phone</p>
+<a href="tel:65189161" class="font-semibold text-accent hover:underline">+65 6518 9161</a>
+</div>
+</div>
+</div>
+</div>
+
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="index.html" class="bg-primary hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-all inline-block">
+Back to Home
+</a>
+</div>
+</div>
+</main>
+
+<footer class="bg-primary text-white py-12 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<p class="text-sm">
+Pioneering excellence in education since 1995. Building leaders of tomorrow through innovation and heritage.
+</p>
+</div>
+</footer>
+</div>
+</body>
+</html>
