@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en" style="color-scheme: light;"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">document.addEventListener('DOMContentLoaded', function() {
+<script>
+  tailwind.config = {
+   darkMode: 'class',}
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('multi-step-form');
     const step1 = document.getElementById('step-1');
     const step2 = document.getElementById('step-2');
     const proceedBtn = document.getElementById('proceed-btn');
+    const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
 
-    const portalId = 'YOUR_PORTAL_ID';
-    const formId = 'YOUR_FORM_ID';
+    // TODO: Set your actual HubSpot Portal IDs and Form IDs for both steps
+    const portalId1 = 'YOUR_PORTAL_ID_STEP1';
+    const formId1 = 'YOUR_FORM_ID_STEP1';
+    const portalId2 = 'YOUR_PORTAL_ID_STEP2';
+    const formId2 = 'YOUR_FORM_ID_STEP2';
 
-    async function submitToHubSpot(data) {
+    async function submitToHubSpot(data, portalId, formId) {
       const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
       const fields = Object.keys(data).map(key => ({
         name: key,
@@ -42,154 +51,122 @@
       }
     }
 
+    // STEP 1: Send data when user clicks "Proceed"
     proceedBtn.addEventListener('click', async () => {
       const step1Inputs = step1.querySelectorAll('input');
       let allValid = true;
-      const step1Data = {};
 
       step1Inputs.forEach(input => {
         if (!input.checkValidity()) {
           input.reportValidity();
           allValid = false;
-        } else {
-          step1Data[input.name] = input.value;
         }
       });
 
       if (allValid) {
-        await submitToHubSpot(step1Data);
+        // Collect Step 1 data
+        const data = {};
+        step1Inputs.forEach(input => {
+          data[input.name] = input.value;
+        });
+
+        // Send Step 1 data to HubSpot (fire and forget - doesn't block form)
+        submitToHubSpot(data, portalId1, formId1).then(sent => {
+          if (!sent) {
+            console.warn('HubSpot Step 1 submission failed, but form will proceed');
+          }
+        }).catch(error => {
+          console.error('HubSpot Step 1 error:', error);
+        });
+
+        // Always proceed to Step 2, regardless of HubSpot status
         step1.classList.add('hidden');
         step2.classList.remove('hidden');
-        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
         if (formTitle) formTitle.textContent = 'Additional Information';
       }
     });
 
+    // STEP 2: Send data when user clicks "Submit Details"
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+      const step2Inputs = step2.querySelectorAll('input, select, textarea');
+      let allValid = true;
       
-      const success = await submitToHubSpot(data);
+      step2Inputs.forEach(input => {
+        if (input.required && !input.value) {
+          input.reportValidity();
+          allValid = false;
+        }
+      });
       
-      if (success) {
-        form.parentElement.innerHTML = `
-          <div class="text-center py-10 px-6 bg-green-50/50 dark:bg-green-900/10 rounded-2xl border-2 border-green-100 dark:border-green-900/30 shadow-xl shadow-green-500/10 animate-[fadeIn_0.5s_ease-out]">
-<div class="mb-6 flex justify-center">
-<div class="bg-green-100 dark:bg-green-800 rounded-full p-6 animate-[scaleUp_0.4s_ease-out] shadow-inner">
-<span class="material-symbols-outlined text-7xl text-green-600 dark:text-green-400 block">check_circle</span>
-</div>
-</div>
-<h3 class="text-2xl font-bold mb-4 text-[#000080] dark:text-white">Enquiry Submitted Successfully!</h3>
-<p class="text-slate-600 dark:text-slate-300 max-w-[320px] mx-auto leading-relaxed">
-              Thank you for your interest. Our admissions team will be in touch with you shortly.
-            </p>
-</div>
-        `;
+      if (!allValid) return;
+
+      // Collect Step 2 data
+      const data = {};
+      step2Inputs.forEach(input => {
+        data[input.name] = input.value;
+      });
+
+      // Include email from Step 1 (useful for matching/updating contact in HubSpot)
+      const email = form.querySelector('input[name="email"]');
+      if (email && email.value) {
+        data.email = email.value;
       }
+
+      // Send Step 2 data to HubSpot (fire and forget - doesn't block form)
+      submitToHubSpot(data, portalId2, formId2).then(success => {
+        if (!success) {
+          console.warn('HubSpot Step 2 submission failed, but form will proceed to thank you page');
+        }
+      }).catch(error => {
+        console.error('HubSpot Step 2 error:', error);
+      });
+
+      // Always redirect, regardless of HubSpot status
+      window.location.href = window.location.pathname.replace('index.html', '') + 'thank-you.html';
     });
-  });</script>
+
+    // Add event listeners to all "I'm Interested" buttons
+    document.querySelectorAll('.interested-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.getElementById('multi-step-form').scrollIntoView({behavior: 'smooth'});
+      });
+    });
+});
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('multi-step-form');
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    const proceedBtn = document.getElementById('proceed-btn');
-
-    const portalId = 'YOUR_PORTAL_ID';
-    const formId = 'YOUR_FORM_ID';
-
-    async function submitToHubSpot(data) {
-      const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-      const fields = Object.keys(data).map(key => ({
-        name: key,
-        value: data[key]
-      }));
-
-      const body = {
-        fields,
-        context: {
-          pageUri: window.location.href,
-          pageName: document.title
-        }
-      };
-
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-        });
-        return response.ok;
-      } catch (error) {
-        console.error('HubSpot submission error:', error);
-        return false;
-      }
-    }
-
-    proceedBtn.addEventListener('click', async () => {
-      const step1Inputs = step1.querySelectorAll('input');
-      let allValid = true;
-      const step1Data = {};
-
-      step1Inputs.forEach(input => {
-        if (!input.checkValidity()) {
-          input.reportValidity();
-          allValid = false;
-        } else {
-          step1Data[input.name] = input.value;
-        }
-      });
-
-      if (allValid) {
-        await submitToHubSpot(step1Data);
-        step1.classList.add('hidden');
-        step2.classList.remove('hidden');
-        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
-        if (formTitle) formTitle.textContent = 'Additional Information';
-      }
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      
-      const success = await submitToHubSpot(data);
-      
-      if (success) {
-        // Reset form and return to Step 1
-        form.reset();
-        step2.classList.add('hidden');
-        step1.classList.remove('hidden');
-        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
-        if (formTitle) formTitle.textContent = 'Request Information';
-      }
-    });
-  });</script>
 <style>
-        body {
-            font-family: "Public Sans", sans-serif;
-        }
-    </style>
-<style></style></head>
+body {
+  font-family: "Public Sans", sans-serif;
+}
+
+/* CSS Variables for color theme */
+:root {
+  --accent: #ff0000;
+  --primary: #000080;
+  --background-light: #f9f9f9;
+  --background-dark: #0f172a;
+}
+
+/* Custom utility classes for missing colors */
+.bg-accent { background-color: var(--accent); }
+.text-accent { color: var(--accent); }
+.text-primary { color: var(--primary); }
+.bg-primary { background-color: var(--primary); }
+.bg-background-light { background-color: var(--background-light); }
+.bg-background-dark { background-color: var(--background-dark); }
+</style>
+</head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
 <header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex h-16 items-center justify-between">
-<div class="flex items-center gap-2"><img alt="Wise Oaks Logo" class="w-auto h-16" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXUrN5DdA18S0yNImGsCsUG_GfXgYTSgUmoLnfCx2kkDBZdXGheIj7wxLhYtKOqG7uW7-RFUrA2menY7cor5ZKJm0Wd-jUKsGcocgAuMbQrhwGOmu43pjsGrXNmgtvIxlk-_lSYguyHSvMczr0ue2Z5vJ2llRVA_wZhO6cTyJWa1bu2Faqe5v6f1JUPZJhJHhhpAHtqewolxq7ysw5EJ_-6NrexJdIyxNA6JpMHpa8clJji0pPXaGUNrzYi-cQ4m-z_BtlSdg_X-M"/></div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Programs</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Admissions</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Locations</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="#">About Us</a>
-</nav>
+<div class="flex items-center gap-2"><img alt="Wise Oaks Logo" class="w-auto h-16" src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"/></div>
 <div class="flex items-center gap-4">
-<button class="hidden sm:block text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-primary/90 transition-all bg-accent">INQUIRE</button>
+<button class="hidden sm:block text-white px-6 py-2 rounded-xl font-bold text-sm transition-all bg-red-600 hover:bg-red-700 interested-btn">Admission Open 2026-27</button>
 </div>
 </div>
 </div>
@@ -198,7 +175,7 @@
 <section class="relative min-h-[600px] flex items-center py-20">
 <div class="absolute inset-0 z-0">
 <div class="absolute inset-0 bg-black/50 z-10"></div>
-<img alt="Hero Background" class="w-full h-full object-cover" data-alt="Modern university campus building with students walking" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDstWVZo6dpVLXMi_Z_x7y43LunQl94Ov2gRP5x6zjA7aB8edlRKJqptoLcVf7RNIbhv_I4lr2h6dZhsZsuk0epHdAYLR461QWdxXl3E3rf2pAfa4aDOyWYaXv_Nck0nEzNZ5RVrtxfGhHqNBUoL9MglU6M_-mv8WcX0JJBCkRBeV0MzdVaFM0pi52m6f3phjx59a5gY6OHMqpHsBpx6iFPDgRNR9aBE5XtQeEJdNCcOqsUWaIvvOMoTjFXzabJtwwJpBVvScySNT8"/>
+<img alt="Hero Background" class="w-full h-full object-cover" data-alt="Modern university campus building with students walking" src="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x1280/"/>
 </div>
 <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -224,32 +201,27 @@
 <div class="space-y-4 hidden" id="step-2">
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact no.</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone" placeholder="+65 0000 0000" required="" type="tel"/>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone_number" placeholder="+65 0000 0000" required="" type="tel"/>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Residential Status</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status" required="">
-<option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status" required=""><option disabled="" selected="" value="">Click for Options</option>
 <option>Singapore Citizen</option>
 <option>Singapore Permanent Resident</option>
 <option>Dependent Pass</option>
 <option>Long Term Visit Visa</option>
-<option>Student Pass</option>
-</select>
+<option>Student Pass</option></select>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select a campus</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus" required="">
-<option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus" required=""><option disabled="" selected="" value="">Click for Options</option>
 <option>Bukit Timah campus</option>
 <option>Valley Point Campus</option>
-<option>Upper Serangoon Road Campus</option>
-</select>
+<option>Upper Serangoon Road Campus</option></select>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select Grade</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade" required="">
-<option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade" required=""><option disabled="" selected="" value="">Click for Options</option>
 <option>Grade 1</option>
 <option>Grade 2</option>
 <option>Grade 3</option>
@@ -257,14 +229,13 @@
 <option>Grade 5</option>
 <option>Grade 6</option>
 <option>Grade 7</option>
-<option>Grade 8</option>
-</select>
+<option>Grade 8</option></select>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Feedback (Optional)</label>
 <textarea class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="message" placeholder="Your feedback..." rows="3"></textarea>
 </div>
-<button class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-red-600/20 bg-red-600 hover:bg-red-700" type="submit">Submit Details</button>
+<button class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-red-600/20 bg-red-600 hover:bg-red-700" id="submit-details-btn" type="submit">Submit Details</button>
 </div></form>
 </div>
 </div>
@@ -277,44 +248,44 @@
 </div>
 </div>
 </section>
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<section id="locations" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-black">
 <div class="text-center mb-12">
-<h2 class="text-3xl font-bold tracking-tight mb-3">Our Locations</h2><div class="w-16 h-1 bg-accent mx-auto rounded-full mb-4"></div>
-<p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Discover our global presence and state-of-the-art facilities.</p>
+<h2 class="text-3xl font-bold tracking-tight mb-3 text-black">Our Locations</h2><div class="w-16 h-1 bg-accent mx-auto rounded-full mb-4"></div>
+<p class="text-slate-900 max-w-2xl mx-auto">Discover our global presence and state-of-the-art facilities.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
 <img alt="North Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Modern glass office building in New York city" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIJhHOB2r0M7UoSPVrKrb6YHsVZxM_hZy4FTdxjuMwi00pqJr_JAnPBm8CZx9Fn0T--OPARtPUwDoEQkCD3SakAZIZLgzVKsFPlaTmmC7KCu5qVENghmvM3l6SXUBj2mU9XpDvm4QQ3TUlYN-uoHQnqYOVuFP_8Qq0MFNtqIt80lLQPfNPLjRCLKbiSRkSK2g6LOgejH3z8kuKQmKPmjK8j4ipPfngtzEvZHlOdPeyJoK484uSNpOocX2IF9mJ0bJxq9pkF1iQjQ8"/>
 <div class="absolute top-4 left-4">
-<span class="bg-white/90 dark:bg-slate-900/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span>
+<!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
 </div>
-<h3 class="text-xl font-bold mb-1">BUKIT TIMAH CAMPUS</h3>
-<p class="text-slate-600 dark:text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> 205 Upper Bukit Timah Rd, #02-01, Singapore 588181</p>
+<h3 class="text-xl font-bold mb-2">BUKIT TIMAH CAMPUS</h3>
+<p class="text-slate-900 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> 205 Upper Bukit Timah Rd, #02-01, Singapore 588181</p>
 </div>
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
 <img alt="South Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Technological park with modern architecture in Austin Texas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAazlC4B5lOIQ9u0mtUaTlUfnod-a8Bjo5ht3_2daSkl3LO3L1wT32QmmPMyrXZz5vhJ4hGpmKnBXCtNIFzDiKOFfomAZYKPk3Mu3Op74Zeo7-kCz3qTWnZP5mScGsiYhDckx5fetzf131OXWZipbDOqrljDgsFLTZHKiFCoXQ-CTyDJGzqzhogTLbRpLxj_7ejI6L2noofiLBv9rPW5kAr6L00DXhEk599Hl3oMWA0R1aRmg9dPuVq_uaHGxWgHoofI2dYbCEk1RU"/>
 <div class="absolute top-4 left-4">
-<span class="bg-white/90 dark:bg-slate-900/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span>
+<!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
 </div>
-<h3 class="text-xl font-bold mb-1">VALLEY POINT CAMPUS</h3>
-<p class="text-slate-600 dark:text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> 491B, River Valley Road, Office Tower #17-01/04, Singapore 248373</p>
+<h3 class="text-xl font-bold mb-2">VALLEY POINT CAMPUS</h3>
+<p class="text-slate-900 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> 491B, River Valley Road, Office Tower #17-01/04, Singapore 248373</p>
 </div>
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
 <img alt="International Wing" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Victorian style university building in London UK" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6LpM2dLVoxNxmin3e_41cQDPQLgH3s71wOR4RwKivSBUD4lpeUnJxgpeFtD-nluYEOmBUxYiO4BkjxRJ4T8kZXdiOpsg4-NR8Ditf6H5zqzSp6Iq4capBPu1YQq4B9cwjRi363DReFJ1E6TSyAqbLkQaXsy0B4CXqrXbRJpUwpQIZY3WzOgU6mQPAuPYz2noj1iOBfRljA9MuFRJ03tOpr43934SE-fFxzhvDi8ZKX9xnuG89Nanveov-55BpdsuW2LBlNEDK52s"/>
 <div class="absolute top-4 left-4">
-<span class="bg-white/90 dark:bg-slate-900/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span>
+<!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
 </div>
 <h3 class="text-xl font-bold mb-1">UPPER SERANGOON ROAD CAMPUS</h3>
-<p class="text-slate-600 dark:text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> #02-01-13, 780, Upper Serangoon Road, Singapore - 534649</p>
+<p class="text-slate-900 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> #02-01-13, 780, Upper Serangoon Road, Singapore - 534649</p>
 </div>
 </div>
-</section><section class="bg-[#000080] py-20">
+</section><section id="programmes" class="bg-[#000080] py-20">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid lg:grid-cols-2 gap-12 items-center">
 <div class="text-white">
@@ -338,7 +309,7 @@
 <span class="text-lg">Cambridge IGCSE Programme (Grades 9 &amp; 10)</span>
 </li>
 </ul>
-<button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+<button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors interested-btn">
                     Yes I'm Interested
                 </button>
 </div>
@@ -348,37 +319,37 @@
 </div>
 </div>
 </section>
-<section class="bg-slate-100 dark:bg-slate-800/50 py-20">
+<section class="bg-background-light py-20">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="text-center mb-16">
-<h2 class="text-3xl font-bold tracking-tight mb-4">Why Choose Us</h2>
+<h2 class="text-3xl font-bold tracking-tight mb-4 text-black">Why Choose Us</h2>
 <div class="w-16 h-1 bg-accent mx-auto rounded-full"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
 <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
 <div class="w-20 h-20 flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-3xl text-5xl">lightbulb</span>
+<span class="material-symbols-outlined text-white text-3xl text-5xl">lightbulb</span>
 </div>
 <h4 class="font-bold text-lg mb-2">Apart from Cambridge based curriculum and Singapore Mathematics, our programmes are thoughtfully designed</h4>
 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"><ul class="space-y-1 mt-4"><li class="flex items-start justify-center gap-2">- WiseTech CodeSpark</li><li class="flex items-start justify-center gap-2">- LingoLex (Language Enrichment Program)</li><li class="flex items-start justify-center gap-2">- Thematic CCAs &amp; ECAs includes both sports and non sports activities.</li><li class="flex items-start justify-center gap-2">- Skill Enhancement Programs</li></ul></p>
 </div>
 <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
 <div class="w-20 h-20 flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-3xl text-5xl">settings_suggest</span>
+<span class="material-symbols-outlined text-white text-3xl text-5xl">settings_suggest</span>
 </div>
 <h4 class="font-bold text-lg mb-2">Technology aided delivery mechanism</h4>
 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"><ul class="space-y-1 mt-4"><li class="flex items-start justify-center gap-2">- Students Management System</li><li class="flex items-start justify-center gap-2">- Learning Management System</li></ul></p>
 </div>
 <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
 <div class="w-20 h-20 flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-3xl text-5xl">groups</span>
+<span class="material-symbols-outlined text-white text-3xl text-5xl">groups</span>
 </div>
 <h4 class="font-bold text-lg mb-2">Best in Town Fee structure underscoring our philosophy</h4>
 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"><ul class="space-y-1 mt-4"><li class="flex items-start justify-center gap-2">- Students before Educators</li><li class="flex items-start justify-center gap-2">- Education before Business and</li><li class="flex items-start justify-center gap-2">- Quality Education Everyone's Right</li></ul></p>
 </div>
 <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
 <div class="w-20 h-20 flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-3xl text-5xl">auto_stories</span>
+<span class="material-symbols-outlined text-white text-3xl text-5xl">auto_stories</span>
 </div>
 <h4 class="font-bold text-lg mb-2">Serene and Convenient Location</h4>
 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"><ul class="space-y-1 mt-4"><li class="flex items-start justify-center gap-2">- Close to National Nature Reserves</li><li class="flex items-start justify-center gap-2">- 5 minutes walk from Beauty World MRT station on Blue line</li><li class="flex items-start justify-center gap-2">- Strategically located near many sports facilities</li></ul></p>
@@ -386,7 +357,7 @@
 </div>
 </div>
 </section>
-<section class="bg-[#000080] py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="admissions" class="bg-[#000080] py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex flex-col md:flex-row gap-12 items-center">
 <div class="flex-1">
 <h2 class="text-3xl font-bold tracking-tight mb-6 text-white">Admission Process</h2><div class="w-40 h-1 bg-red-600 mb-10"></div>
@@ -416,7 +387,7 @@
 <div class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">4</div>
 <div>
 <h5 class="font-bold text-lg mb-1 text-white">Student Contract</h5>
-<p class="text-slate-300">Upon acceptance of a place at Elite Academy, execute the student contract.</p>
+<p class="text-slate-300">Upon acceptance of a place at Wise Oaks, execute the student contract.</p>
 </div>
 </div>
 <div class="flex gap-6">
@@ -438,22 +409,19 @@
 <div class="flex-1 w-full">
 <div class="relative rounded-2xl overflow-hidden shadow-2xl">
 <img alt="Students" class="w-full h-full object-cover" data-alt="Group of diverse students working together on a project" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCblbbJLhrBK3yPFUTtHHO_1VcpV1QLblNVGmbGrYXA5lMo08tHkqc0aD1maujzV-PWzN5qQBvS7cAaJDYrz2pe1CM9FFDP-JTGKJo2n7iMj1FhVsxwMRYGcvIEtd-aII7Vdf0nlwyRVfvF4oLPm_4OWoVy1tJV2R9fbyDr8sbf0uhDLkkFIUfx73ENKGhHR2GCSVUq3ryrFUyTnrBVWvoKaW8l9lRL0cYe8Wtuh5v60yvT60QuZHNP2WVvALvDInAWmlZ7V75aih8"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-<p class="text-white italic">"The support I received during the application process was phenomenal. Truly elite." - Sarah J., Alumna</p>
-</div>
 </div>
 </div>
 </div>
 </div></section>
 </main>
-<section class="bg-slate-50 dark:bg-slate-900/50 py-16 border-t border-slate-200 dark:border-slate-800">
+<section class="bg-white dark:bg-background-dark py-16 border-t border-slate-200 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
 <div class="max-w-2xl mx-auto md:mx-0">
-<h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight text-center md:text-left">Still Have doubts,<br/>Schedule a 15 minute online session with us.</h3>
+<h3 class="text-2xl md:text-3xl font-bold text-black leading-tight text-center md:text-left">Still Have doubts,<br/>Schedule a 15 minute online session with us.</h3>
 </div>
 <div class="flex-shrink-0">
-<button class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg shadow-red-600/20 whitespace-nowrap">
+<button class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg shadow-red-600/20 whitespace-nowrap interested-btn">
           Yes I'm Interested
         </button>
 </div>
@@ -464,23 +432,15 @@
 <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-4">
 <div class="max-w-xl">
 <div class="flex items-center gap-2 mb-6 text-slate-900">
-<img alt="Wise Oaks Logo" class="w-auto h-14" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8qRmu1GMKhnLdnHodIJUgIS5PoUxJBAV-q1exn3l_nst4BuoDa41BJALhlIeCNRDjDPNoVhj5ittNIrMX14ZQC4XiSOQ3TTX-xXkmzSOw6KSanApKI4LXK04LvKtF9nlVgdZ5YQQlh9z5sA7q9tjPYTmStDyXhDXk_MKjAMvzi8PulHNIyM5n7_Vj4-yPzNJTvP2-Bq-XXDk44U31V97uTqC54uAYX7AO9J2qjcf5t0J70Q1-iFT-D6wfMPrXLr1KWverVtmBw_o"/>
-<h2 class="text-lg font-bold">Wise Oaks</h2>
+<img alt="Wise Oaks Logo" class="w-auto h-14" src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"/>
 </div>
-<p class="text-sm leading-relaxed">
-      Pioneering excellence in education since 1995. Building leaders of tomorrow through innovation and heritage.
-    </p>
 </div>
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
 <h3 class="font-bold text-lg text-slate-900">Contact Us</h3>
-<ul class="space-y-4">
+<ul class="space-y-1">
 <li class="flex items-center gap-3">
 <span class="material-symbols-outlined text-accent text-xl">mail</span>
 <a class="transition-colors hover:text-primary" href="mailto:admin@wiseoaks.sg">admin@wiseoaks.sg</a>
-</li>
-<li class="flex items-center gap-3">
-<span class="material-symbols-outlined text-accent text-xl">call</span>
-<a class="transition-colors hover:text-primary" href="tel:65189161">65189161</a>
 </li>
 </ul>
 </div>
@@ -488,82 +448,4 @@
 </div>
 </footer>
 </div>
-<script>document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('multi-step-form');
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    const proceedBtn = document.getElementById('proceed-btn');
-
-    const portalId = 'YOUR_PORTAL_ID';
-    const formId = 'YOUR_FORM_ID';
-
-    async function submitToHubSpot(data) {
-      const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-      const fields = Object.keys(data).map(key => ({
-        name: key,
-        value: data[key]
-      }));
-
-      const body = {
-        fields,
-        context: {
-          pageUri: window.location.href,
-          pageName: document.title
-        }
-      };
-
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-        });
-        return response.ok;
-      } catch (error) {
-        console.error('HubSpot submission error:', error);
-        return false;
-      }
-    }
-
-    proceedBtn.addEventListener('click', async () => {
-      const step1Inputs = step1.querySelectorAll('input');
-      let allValid = true;
-      const step1Data = {};
-
-      step1Inputs.forEach(input => {
-        if (!input.checkValidity()) {
-          input.reportValidity();
-          allValid = false;
-        } else {
-          step1Data[input.name] = input.value;
-        }
-      });
-
-      if (allValid) {
-        await submitToHubSpot(step1Data);
-        step1.classList.add('hidden');
-        step2.classList.remove('hidden');
-        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
-        if (formTitle) formTitle.textContent = 'Additional Information';
-      }
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      
-      const success = await submitToHubSpot(data);
-      
-      if (success) {
-        // Reset form and return to Step 1
-        form.reset();
-        step2.classList.add('hidden');
-        step1.classList.remove('hidden');
-        const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
-        if (formTitle) formTitle.textContent = 'Request Information';
-      }
-    });
-  });</script></body></html>
+</body></html>
