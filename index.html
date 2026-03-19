@@ -114,16 +114,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Send Step 2 data to HubSpot (fire and forget - doesn't block form)
-      submitToHubSpot(data, portalId2, formId2).then(success => {
-        if (!success) {
-          console.warn('HubSpot Step 2 submission failed, but form will proceed to thank you page');
-        }
-      }).catch(error => {
-        console.error('HubSpot Step 2 error:', error);
-      });
+      
+      // submitToHubSpot(data, portalId2, formId2).then(success => {
+      //   if (!success) {
+      //     console.warn('HubSpot Step 2 submission failed, but form will proceed to thank you page');
+      //   }
+      // }).catch(error => {
+      //   console.error('HubSpot Step 2 error:', error);
+      // });
 
-      // Always redirect, regardless of HubSpot status
-      window.location.href = window.location.pathname.replace('index.html', '') + 'thank-you.html';
+      // // Always redirect, regardless of HubSpot status
+      // window.location.href = window.location.pathname.replace('index.html', '') + 'thank-you.html';
+      try {
+  await submitToHubSpot(data, portalId2, formId2);
+} catch (error) {
+  console.error('HubSpot Step 2 error:', error);
+} finally {
+  window.location.href = window.location.pathname.replace('index.html', '') + 'thank-you.html';
+}
     });
 
     // Add event listeners to all "I'm Interested" buttons
