@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
 
     // TODO: Set your actual HubSpot Portal IDs and Form IDs for both steps
-    const portalId1 = 'YOUR_PORTAL_ID_STEP1';
-    const formId1 = 'YOUR_FORM_ID_STEP1';
-    const portalId2 = 'YOUR_PORTAL_ID_STEP2';
-    const formId2 = 'YOUR_FORM_ID_STEP2';
+    const portalId1 = '245586835';
+    const formId1 = 'b2eee453-2d06-4fc3-a17c-3a584cc9aac7';
+    const portalId2 = '245586835';
+    const formId2 = 'b2eee453-2d06-4fc3-a17c-3a584cc9aac7';
 
     async function submitToHubSpot(data, portalId, formId) {
       const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
@@ -181,7 +181,7 @@ body {
 <div class="grid lg:grid-cols-2 gap-12 items-center">
 <div class="order-2 lg:order-2">
 <div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-2xl max-w-md mx-auto lg:mx-0 border border-slate-100 dark:border-slate-800">
-<h3 class="text-2xl font-bold mb-2">Request Information</h3>
+<h3 class="text-2xl font-bold mb-2">Enquire Now</h3>
 <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm">Start your journey with us today. Fill out the form below to get started.</p>
 <form class="space-y-4" id="multi-step-form"><div class="space-y-4" id="step-1">
 <div>
@@ -201,11 +201,11 @@ body {
 <div class="space-y-4 hidden" id="step-2">
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact no.</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone_number" placeholder="+65 0000 0000" required="" type="tel"/>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="phone_number" placeholder=" 0000 0000" required="" type="tel" maxlength="11" title="Please enter a valid number without country code"/>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Residential Status</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status" required=""><option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="residential_status" required=""><option disabled="" selected="" value="">Select an Option</option>
 <option>Singapore Citizen</option>
 <option>Singapore Permanent Resident</option>
 <option>Dependent Pass</option>
@@ -214,14 +214,14 @@ body {
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select a campus</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus" required=""><option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="campus" required=""><option disabled="" selected="" value="">Select an Option</option>
 <option>Bukit Timah campus</option>
 <option>Valley Point Campus</option>
 <option>Upper Serangoon Road Campus</option></select>
 </div>
 <div>
 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select Grade</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade" required=""><option disabled="" selected="" value="">Click for Options</option>
+<select class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" name="grade" required=""><option disabled="" selected="" value="">Select an Option</option>
 <option>Grade 1</option>
 <option>Grade 2</option>
 <option>Grade 3</option>
@@ -241,7 +241,7 @@ body {
 </div>
 <div class="order-1 text-white text-center lg:text-left lg:order-1">
 <span class="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 bg-accent">Wise Oaks International School</span>
-<h1 class="text-4xl md:text-6xl font-black leading-tight mb-6">Education that transcends all boundaries!</h1>
+<h1 class="text-4xl md:text-5xl font-black leading-tight mb-6">Give Wings of reality to boundless dreams of your child with <br>  <span class="text-accent">Wise Oaks</span></h1>
 <p class="text-lg md:text-xl text-slate-200 mb-8 max-w-2xl lg:mx-0 mx-auto leading-relaxed">We believe that your child deserves the best of learning and we provide it in the most affordable way.</p>
 <div class="flex flex-wrap gap-4 justify-center lg:justify-start"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-accent">menu_book</span><span class="font-medium">Robust Cambridge curriculum</span></div><div class="flex items-center gap-2"><span class="material-symbols-outlined text-accent">calculate</span><span class="font-medium">Proven Singapore Maths</span></div></div>
 </div>
@@ -257,9 +257,8 @@ body {
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
 <img alt="South Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="BUKIT CAMPUS" 
-  src="https://cdn.lugc.link/82f31f3c-358b-4753-bf92-f8c212a62066/-/preview/400x200/-/format/auto/"/>
+  src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916355/Upper_bukit_timah_road_lwcicg.jpg"/>
 <div class="absolute top-4 left-4">
-<!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
 </div>
 <h3 class="text-xl font-bold mb-2">BUKIT TIMAH CAMPUS</h3>
@@ -267,10 +266,9 @@ body {
 </div>
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
-<img alt="South Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="VAlly Point Campus" 
-  src="https://cdn.lugc.link/9b2d6733-4592-4f0c-891a-8fcee5c8e22e/-/preview/200x300"/>
+<img alt="South Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Technological park with modern architecture in Austin Texas" 
+src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916298/Valley_point_hoaemw.jpg"/>
 <div class="absolute top-4 left-4">
-<!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
 </div>
 <h3 class="text-xl font-bold mb-2">VALLEY POINT CAMPUS</h3>
@@ -278,8 +276,8 @@ body {
 </div>
 <div class="group cursor-pointer">
 <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
-<img alt="International Wing" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Upper Serangoon" 
-  src="https://cdn.lugc.link/0356fb60-c0db-453d-9006-f911fa8b6073/-/preview/300x400"/>
+<img alt="International Wing" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Victorian style university building in London UK" 
+src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916351/Upper_serangoon_road_baxqby.jpg"/>
 <div class="absolute top-4 left-4">
 <!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
 </div>
@@ -317,7 +315,7 @@ body {
                 </button>
 </div>
 <div class="relative">
-<img alt="Puzzle Pic" class="w-full h-auto rounded-lg shadow-2xl" src="https://cdn.lugc.link/b8619a43-624e-46a7-a4aa-b9b992a5b49d/-/preview/400x302/-/format/auto/"/>
+<img alt="Puzzle image" class="w-full h-auto rounded-lg shadow-2xl" src="https://cdn.lugc.link/b8619a43-624e-46a7-a4aa-b9b992a5b49d/-/preview/400x302/-/format/auto/"/>
 </div>
 </div>
 </div>
@@ -411,7 +409,8 @@ body {
 </div>
 <div class="flex-1 w-full">
 <div class="relative rounded-2xl overflow-hidden shadow-2xl">
-<img alt="Students" class="w-full h-full object-cover" data-alt="Group of diverse students working together on a project" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCblbbJLhrBK3yPFUTtHHO_1VcpV1QLblNVGmbGrYXA5lMo08tHkqc0aD1maujzV-PWzN5qQBvS7cAaJDYrz2pe1CM9FFDP-JTGKJo2n7iMj1FhVsxwMRYGcvIEtd-aII7Vdf0nlwyRVfvF4oLPm_4OWoVy1tJV2R9fbyDr8sbf0uhDLkkFIUfx73ENKGhHR2GCSVUq3ryrFUyTnrBVWvoKaW8l9lRL0cYe8Wtuh5v60yvT60QuZHNP2WVvALvDInAWmlZ7V75aih8"/>
+<img alt="Students" class="w-full h-full object-cover" data-alt="Group of diverse students working together on a project" 
+src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773917909/image.jpg_lpo6kc.jpg"/>
 </div>
 </div>
 </div>
@@ -431,22 +430,11 @@ body {
 </div>
 </div>
 </section><footer class="bg-[#f9f9f9] text-slate-600 py-12 border-t border-slate-200 bg-[#f0f0f0] pt-12 pb-4">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-4">
-<div class="max-w-xl">
-<div class="flex items-center gap-2 mb-6 text-slate-900">
-<img alt="Wise Oaks Logo" class="w-auto h-14" src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"/>
-</div>
-</div>
-<div class="flex flex-col gap-2">
-<h3 class="font-bold text-lg text-slate-900">Contact Us</h3>
-<ul class="space-y-1">
-<li class="flex items-center gap-3">
-<span class="material-symbols-outlined text-accent text-xl">mail</span>
-<a class="transition-colors hover:text-primary" href="mailto:admin@wiseoaks.sg">admin@wiseoaks.sg</a>
-</li>
-</ul>
-</div>
+
+<div class="text-center w-full py-6">
+  <p class="text-slate-600 text-lg">
+    Copyright © 2025 | Wise Oaks international School
+  </p>
 </div>
 </div>
 </footer>
