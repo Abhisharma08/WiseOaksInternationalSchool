@@ -15,30 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const step2 = document.getElementById('step-2');
     const proceedBtn = document.getElementById('proceed-btn');
     const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
-
-    // TODO: Set your actual HubSpot Portal IDs and Form IDs for both steps
-    const portalId1 = '245586835';
-    const formId1 = '22a89e5a-9aed-410a-8501-7a9f1c612ce8';
-    const portalId2 = '245586835';
-    const formId2 = '22a89e5a-9aed-410a-8501-7a9f1c612ce8';
-
-    async function submitToHubSpot(data, portalId, formId) {
-      const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-      const fields = Object.keys(data).map(key => ({
-        name: key,
-        value: data[key]
-      }));
-
+    
+    async function submitEnquiry(step, data) {
       const body = {
-        fields,
-        context: {
-          pageUri: window.location.href,
-          pageName: document.title
-        }
+        step,
+        data,
+        pageUri: window.location.href,
+        pageName: document.title
       };
 
       try {
-        const response = await fetch(endpoint, {
+        const response = await fetch('/api/submit-enquiry', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -72,12 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Send Step 1 data to HubSpot (fire and forget - doesn't block form)
-        submitToHubSpot(data, portalId1, formId1).then(sent => {
+        submitEnquiry('step1', data).then(sent => {
           if (!sent) {
-            console.warn('HubSpot Step 1 submission failed, but form will proceed');
+            console.warn('Step 1 submission failed, but form will proceed');
           }
         }).catch(error => {
-          console.error('HubSpot Step 1 error:', error);
+          console.error('Step 1 submission error:', error);
         });
 
         // Always proceed to Step 2, regardless of HubSpot status
@@ -114,25 +101,13 @@ document.addEventListener('DOMContentLoaded', function() {
         data.email = email.value;
       }
 
-      // Send Step 2 data to HubSpot (fire and forget - doesn't block form)
-      
-      // submitToHubSpot(data, portalId2, formId2).then(success => {
-      //   if (!success) {
-      //     console.warn('HubSpot Step 2 submission failed, but form will proceed to thank you page');
-      //   }
-      // }).catch(error => {
-      //   console.error('HubSpot Step 2 error:', error);
-      // });
-
-      // // Always redirect, regardless of HubSpot status
-      // window.location.href = window.location.pathname.replace('index.html', '') + 'thank-you.html';
       try {
-  await submitToHubSpot(data, portalId2, formId2);
-} catch (error) {
-  console.error('HubSpot Step 2 error:', error);
-} finally {
-  window.location.href = '/thank-you/';
-}
+        await submitEnquiry('step2', data);
+      } catch (error) {
+        console.error('Step 2 submission error:', error);
+      } finally {
+        window.location.href = '/thank-you/';
+      }
     });
 
     // Add event listeners to all "I'm Interested" buttons
