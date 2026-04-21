@@ -37,7 +37,7 @@
           });
           return response.ok;
         } catch (error) {
-          console.error('HubSpot submission error:', error);
+          console.error('API submission error:', error);
           return false;
         }
       }
@@ -61,7 +61,7 @@
             data[input.name] = input.value;
           });
 
-          // Send Step 1 data to HubSpot (fire and forget - doesn't block form)
+          // Send Step 1 data to proxy
           submitEnquiry('step1', data).then(sent => {
             if (!sent) {
               console.warn('Step 1 submission failed, but form will proceed');

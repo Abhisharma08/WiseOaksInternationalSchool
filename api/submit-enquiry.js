@@ -1,10 +1,8 @@
 const STEP_CONFIG = {
   step1: {
-    formIdEnv: "HUBSPOT_FORM_ID_STEP1",
     allowedFields: ["firstname", "student_name", "email"]
   },
   step2: {
-    formIdEnv: "HUBSPOT_FORM_ID_STEP2",
     allowedFields: [
       "email",
       "phone_number",
@@ -36,7 +34,7 @@ function pickAllowedFields(data, allowedFields) {
     }
 
     fields.push({
-      name: fieldName,
+      property: fieldName,
       value: trimmed
     });
   }
@@ -66,17 +64,16 @@ module.exports = async function handler(request, response) {
     return json(response, 405, { ok: false, error: "Method not allowed" });
   }
 
-  const portalId = process.env.HUBSPOT_PORTAL_ID;
   const { step, data, pageUri, pageName } = parseRequestBody(request.body);
   const stepConfig = STEP_CONFIG[step];
 
-  if (!portalId || !stepConfig) {
+  if (!stepConfig) {
     return json(response, 400, { ok: false, error: "Invalid server configuration" });
   }
 
-  const formId = process.env[stepConfig.formIdEnv];
-  if (!formId) {
-    return json(response, 500, { ok: false, error: "Missing form configuration" });
+  const token = process.env.HUBSPOT_ACCESS_TOKEN;
+  if (!token) {
+    return json(response, 500, { ok: false, error: "Missing HUBSPOT_ACCESS_TOKEN" });
   }
 
   const fields = pickAllowedFields(data, stepConfig.allowedFields);
@@ -84,27 +81,32 @@ module.exports = async function handler(request, response) {
     return json(response, 400, { ok: false, error: "No valid form fields provided" });
   }
 
+  const emailField = fields.find(f => f.property === 'email');
+  const email = emailField ? emailField.value : null;
+
+  if (!email) {
+    return json(response, 400, { ok: false, error: "Email is required for contact updates" });
+  }
+
   try {
+    // Send data to HubSpot using Contacts API directly (Upsert by email)
     const hubspotResponse = await fetch(
-      `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`,
+      `https://api.hubapi.com/contacts/v1/contact/createOrUpdate/email/${encodeURIComponent(email)}/`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          fields,
-          context: {
-            pageUri: typeof pageUri === "string" ? pageUri : "",
-            pageName: typeof pageName === "string" ? pageName : ""
-          }
+          properties: fields
         })
       }
     );
 
     if (!hubspotResponse.ok) {
       const details = await hubspotResponse.text();
-      console.error("HubSpot submission failed", details);
+      console.error("HubSpot Contacts API submission failed", details);
       return json(response, 502, { ok: false, error: "Submission failed" });
     }
 
