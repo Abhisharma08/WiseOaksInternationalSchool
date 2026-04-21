@@ -1,100 +1,281 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-body {
-  font-family: "Public Sans", sans-serif;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You | Wise Oaks International School</title>
+  <meta name="description" content="Thank you for contacting Wise Oaks International School." />
+  <link rel="preconnect" href="https://cdn.lugc.link" crossorigin />
+  <style>
+    :root {
+      --accent: #d92d2d;
+      --primary: #0d2b7a;
+      --primary-dark: #0a1f57;
+      --surface: #ffffff;
+      --border: rgba(20, 32, 51, 0.12);
+      --text: #142033;
+      --muted: #5b6779;
+      --shadow: 0 20px 50px rgba(13, 31, 87, 0.14);
+    }
 
-:root {
-  --accent: #FB3C3D;
-  --primary: #000080;
-  --background-light: #f9f9f9;
-  --background-dark: #0f172a;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.bg-accent { background-color: var(--accent); }
-.text-accent { color: var(--accent); }
-.text-primary { color: var(--primary); }
-.bg-primary { background-color: var(--primary); }
-.bg-background-light { background-color: var(--background-light); }
-.bg-background-dark { background-color: var(--background-dark); }
-</style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f7f9fc;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1040px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 249, 252, 0.94);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-bar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .header-bar img {
+      width: 168px;
+      height: auto;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.85rem 1.2rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 14px 28px rgba(217, 45, 45, 0.24);
+      transition: transform 180ms ease, background-color 180ms ease;
+    }
+
+    .button:hover {
+      background: #b92323;
+      transform: translateY(-1px);
+    }
+
+    .main {
+      min-height: calc(100vh - 73px);
+      display: grid;
+      place-items: center;
+      padding: 3rem 0;
+    }
+
+    .panel {
+      width: min(100%, 780px);
+      padding: 2rem;
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 1.25rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e7f7ec;
+      color: #167a3f;
+    }
+
+    .success-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    h1 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(2.2rem, 5vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 34rem;
+      margin: 0 auto 1.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .next-steps {
+      margin: 0 0 2rem;
+      padding: 1.5rem;
+      text-align: left;
+      border-radius: 24px;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .next-steps h2 {
+      margin: 0 0 1rem;
+      font-size: 1.25rem;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 2.3rem;
+      height: 2.3rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--primary);
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .step h3 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .footer {
+      padding: 1.3rem 0;
+      text-align: center;
+      color: #6b7688;
+      border-top: 1px solid var(--border);
+      background: #f0f3f7;
+    }
+
+    @media (max-width: 759px) {
+      .header-bar {
+        min-height: 64px;
+      }
+
+      .header-bar img {
+        width: 152px;
+      }
+
+      .button {
+        min-height: 42px;
+        padding-inline: 1rem;
+      }
+
+      .panel,
+      .next-steps {
+        padding: 1.35rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
-      <div class="flex items-center gap-2"><a href="/"><img alt="Wise Oaks Logo" class="w-auto h-12 sm:h-16" src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"/></a></div>
-      <div class="flex items-center gap-2 sm:gap-4">
-        <a href="/" class="text-white px-4 sm:px-6 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all bg-red-600 hover:bg-red-700 shadow-md">Enquire Now</a>
-      </div>
+
+<body>
+  <header class="site-header">
+    <div class="container header-bar">
+      <a href="/" aria-label="Wise Oaks International School">
+        <img src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"
+          alt="Wise Oaks International School logo" width="212" height="75" decoding="async" />
+      </a>
+      <a class="button" href="/">Enquire Now</a>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="flex-1 flex items-center justify-center py-20 px-4">
-<div class="max-w-2xl w-full text-center">
-<div class="mb-8">
-<div class="flex justify-center mb-6">
-<div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-green-800 text-8xl">check_circle</span>
-</div>
-</div>
-<h1 class="text-4xl md:text-5xl font-bold mb-4 text-black ">Thank You!</h1>
-<p class="text-xl text-slate-900 mb-6">
-Your information has been successfully submitted. <br/> We're excited to help you start your journey with Wise Oaks!
-</p>
-</div>
+  <main class="main">
+    <div class="container">
+      <section class="panel" aria-labelledby="thank-you-title">
+        <div class="success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0-20Zm4.7 6.3a1 1 0 0 0-1.4 0l-4.59 4.58l-1.99-1.98a1 1 0 1 0-1.42 1.41l2.7 2.71a1 1 0 0 0 1.42 0l5.3-5.3a1 1 0 0 0 0-1.42Z" />
+          </svg>
+        </div>
 
-<div class="bg-primary p-8 rounded-xl shadow-lg border border-slate-200 mb-8">
-<h2 class="text-2xl font-bold mb-6 text-white">What's Next?</h2>
-<div class="space-y-6 text-left">
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">1</div>
-<div>
-<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Review Your Information</h3>
-<p class="text-slate-100">We've received your details and our admissions team will review your application.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">2</div>
-<div>
-<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Expect Contact Soon</h3>
-<p class="text-slate-100">Our team will reach out to you within 2-3 business days to discuss next steps.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 bg-background-light text-black rounded-full flex items-center justify-center font-bold">3</div>
-<div>
-<h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white">Schedule a Campus Visit</h3>
-<p class="text-slate-100">Get to know our facilities and meet our team at one of our campuses.</p>
-</div>
-</div>
-</div>
-</div>
+        <h1 id="thank-you-title">Thank You!</h1>
+        <p class="lead">Your information has been successfully submitted. We're excited to help you start your journey
+          with Wise Oaks.</p>
 
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<a href="/" class="bg-primary hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-all inline-block">
-Back to Home
-</a>
-</div>
-</div>
-</main>
+        <div class="next-steps">
+          <h2>What's Next?</h2>
+          <ol class="steps">
+            <li class="step">
+              <div class="step-number">1</div>
+              <div>
+                <h3>Review Your Information</h3>
+                <p>We've received your details and our admissions team will review your application.</p>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-number">2</div>
+              <div>
+                <h3>Expect Contact Soon</h3>
+                <p>Our team will reach out within 2-3 business days to discuss the next steps.</p>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step-number">3</div>
+              <div>
+                <h3>Schedule A Campus Visit</h3>
+                <p>Get to know our facilities and meet our team at one of our campuses.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
 
-<footer class="bg-[#f9f9f9] text-slate-600 py-12 border-t border-slate-200 bg-[#f0f0f0] pt-12 pb-4">
-  <div class="text-center w-full py-6">
-    <p class="text-slate-600 text-lg">
-      Copyright © 2026 | Wise Oaks International School
-    </p>
-  </div>
-</footer>
-</div>
+        <a class="button" href="/">Back to Home</a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 | Wise Oaks International School</p>
+    </div>
+  </footer>
 </body>
+
 </html>

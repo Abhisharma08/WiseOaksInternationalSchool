@@ -1,23 +1,1039 @@
 <!DOCTYPE html>
-<html class="light" lang="en" style="color-scheme: light;">
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <title>Wise Oaks International School</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Explore programmes, campuses, and admissions at Wise Oaks International School in Singapore." />
+  <link rel="preconnect" href="https://cdn.lugc.link" crossorigin />
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+  <link rel="preload" as="image"
+    href="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x960/"
+    imagesrcset="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x640/ 640w, https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x960/ 960w, https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x1280/ 1280w"
+    imagesizes="100vw" fetchpriority="high" />
+  <style>
+    :root {
+      --accent: #d92d2d;
+      --accent-dark: #b92323;
+      --primary: #0d2b7a;
+      --primary-dark: #0a1f57;
+      --surface: #ffffff;
+      --surface-alt: #f4f7fb;
+      --text: #142033;
+      --muted: #5b6779;
+      --border: rgba(20, 32, 51, 0.12);
+      --shadow-soft: 0 20px 50px rgba(13, 31, 87, 0.12);
+      --shadow-strong: 0 24px 70px rgba(13, 31, 87, 0.18);
     }
-  </script>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: light;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: #f7f9fc;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .site-shell {
+      overflow-x: clip;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(247, 249, 252, 0.94);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-bar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 168px;
+      height: auto;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-height: 48px;
+      padding: 0.85rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button:disabled {
+      opacity: 0.7;
+      cursor: progress;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(217, 45, 45, 0.24);
+    }
+
+    .button-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      align-items: center;
+      min-height: clamp(680px, 92vh, 860px);
+      overflow: hidden;
+      background: #0a1433;
+    }
+
+    .hero-media,
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(130deg, rgba(10, 20, 51, 0.84), rgba(10, 20, 51, 0.52) 48%, rgba(10, 20, 51, 0.66));
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 2rem;
+      padding: 3rem 0 4rem;
+    }
+
+    .hero-copy {
+      color: #fff;
+      max-width: 640px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      background: rgba(217, 45, 45, 0.92);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0 0 1rem;
+      font-size: clamp(2.3rem, 6vw, 3.8rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-title span {
+      color: #ffb3b3;
+    }
+
+    .hero-text {
+      margin: 0;
+      max-width: 42rem;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .form-card {
+      width: min(100%, 420px);
+      margin-inline: auto;
+      padding: 1.4rem;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .form-card h2 {
+      margin: 0 0 0.35rem;
+      color: var(--text);
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .form-card p {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .form-stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .field-label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6b7688;
+    }
+
+    .field {
+      width: 100%;
+      min-height: 52px;
+      padding: 0.9rem 1rem;
+      border: 1px solid #d7deea;
+      border-radius: 16px;
+      background: #f8fafc;
+      color: var(--text);
+      transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    textarea.field {
+      min-height: 108px;
+      resize: vertical;
+    }
+
+    .field:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(13, 43, 122, 0.12);
+    }
+
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .deferred-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 920px;
+    }
+
+    .section-head {
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(1.95rem, 4vw, 2.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .section-text {
+      margin: 1rem auto 0;
+      color: var(--muted);
+      max-width: 40rem;
+    }
+
+    .section-bar {
+      width: 5rem;
+      height: 0.28rem;
+      margin: 1rem auto 0;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .location-grid,
+    .feature-grid,
+    .programmes-grid,
+    .admissions-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .location-card,
+    .feature-card,
+    .media-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .location-image {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #dde5f0;
+    }
+
+    .location-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 250ms ease;
+    }
+
+    .location-card:hover .location-image img {
+      transform: scale(1.03);
+    }
+
+    .card-body {
+      padding: 1.2rem;
+    }
+
+    .location-card h3,
+    .feature-card h3,
+    .step-title,
+    .cta-title {
+      margin: 0;
+    }
+
+    .location-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      color: var(--muted);
+    }
+
+    .icon {
+      flex: 0 0 auto;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    .icon-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.7rem;
+      height: 4.7rem;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: rgba(13, 43, 122, 0.08);
+      color: var(--primary);
+    }
+
+    .icon-badge .icon {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .programmes {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .programmes .section-text,
+    .admissions .section-text,
+    .step-text {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .programmes-list,
+    .feature-list,
+    .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .programmes-list {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .programmes-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .programmes-item span:last-child {
+      font-size: 0.95rem;
+    }
+
+    .dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-top: 0.55rem;
+      border-radius: 999px;
+      background: #fff;
+      flex: 0 0 auto;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      border: 2px solid #f2c24e;
+      text-align: center;
+    }
+
+    .feature-card p {
+      margin: 0.5rem 0 0;
+      color: var(--muted);
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 1rem;
+      text-align: left;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 0.6rem;
+      color: var(--text);
+    }
+
+    .feature-list li::before {
+      content: "";
+      width: 0.42rem;
+      height: 0.42rem;
+      margin-top: 0.55rem;
+      border-radius: 999px;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .admissions {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--primary);
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .step-number.is-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .step-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-text {
+      margin: 0;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cta-band {
+      background: #fff;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-panel {
+      display: grid;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .cta-title {
+      font-size: clamp(1.8rem, 4vw, 2rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .footer {
+      padding: 1.3rem 0 6.25rem;
+      text-align: center;
+      color: #6b7688;
+      background: #f0f3f7;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .floating-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(247, 249, 252, 0), rgba(247, 249, 252, 0.88) 24%, #f7f9fc 72%);
+    }
+
+    .floating-cta .button {
+      width: min(100%, 460px);
+      margin: 0 auto;
+      box-shadow: 0 18px 36px rgba(217, 45, 45, 0.28);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (min-width: 760px) {
+      .container {
+        width: min(1120px, calc(100% - 3rem));
+      }
+
+      .hero-grid,
+      .programmes-grid,
+      .admissions-grid {
+        grid-template-columns: minmax(0, 1.06fr) minmax(320px, 420px);
+        align-items: center;
+      }
+
+      .location-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cta-panel {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .footer {
+        padding-bottom: 1.3rem;
+      }
+
+      .floating-cta {
+        display: none;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .hero-grid {
+        gap: 3rem;
+        padding: 4rem 0 5rem;
+      }
+
+      .form-card {
+        margin-inline: 0 0 0 auto;
+      }
+    }
+
+    @media (max-width: 759px) {
+      .header-bar {
+        min-height: 64px;
+      }
+
+      .brand img {
+        width: 152px;
+      }
+
+      .button {
+        min-height: 44px;
+        padding-inline: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="container header-bar">
+        <a class="brand" href="/" aria-label="Wise Oaks International School">
+          <img src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/"
+            alt="Wise Oaks International School logo" width="212" height="75" decoding="async" />
+        </a>
+        <button class="button button-primary interested-btn" type="button">Enquire Now</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-media" aria-hidden="true">
+          <img
+            src="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x960/"
+            srcset="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x640/ 640w, https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x960/ 960w, https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x1280/ 1280w"
+            sizes="100vw" alt="Wise Oaks school campus exterior" width="1280" height="853" fetchpriority="high"
+            decoding="async" />
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Wise Oaks International School</div>
+            <h1 class="hero-title">Give wings of reality to boundless dreams of your child with <span>Wise Oaks</span>
+            </h1>
+            <p class="hero-text">We believe that your child deserves the best of learning and we provide it in the
+              most affordable way.</p>
+          </div>
+
+          <section class="form-card" aria-labelledby="form-title">
+            <h2 id="form-title" data-form-title>Enquire Now</h2>
+            <p>Start your journey with us today. Fill out the form below to get started.</p>
+
+            <form id="multi-step-form" novalidate>
+              <div id="step-1" class="form-stack">
+                <div class="field-group">
+                  <label class="field-label" for="firstname">Name</label>
+                  <input class="field" id="firstname" name="firstname" type="text" placeholder="Your Name"
+                    autocomplete="name" required />
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="email">Email</label>
+                  <input class="field" id="email" name="email" type="email" placeholder="email@example.com"
+                    autocomplete="email" required />
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="phone_number">Contact No.</label>
+                  <input class="field" id="phone_number" name="phone_number" type="tel" placeholder="0000 0000"
+                    autocomplete="tel" inputmode="tel" maxlength="11"
+                    title="Please enter a valid number without country code" required />
+                </div>
+
+                <button class="button button-primary" id="proceed-btn" type="button">Proceed</button>
+              </div>
+
+              <div id="step-2" class="form-stack" hidden>
+                <div class="field-group">
+                  <label class="field-label" for="student_name">Name Of Student</label>
+                  <input class="field" id="student_name" name="student_name" type="text"
+                    placeholder="Student's Full Name" required />
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="residential_status">Residential Status</label>
+                  <select class="field" id="residential_status" name="residential_status" required>
+                    <option value="" selected disabled>Select an Option</option>
+                    <option>Singapore Citizen</option>
+                    <option>Singapore Permanent Resident</option>
+                    <option>Dependent Pass</option>
+                    <option>Long Term Visit Visa</option>
+                    <option>Student Pass</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="campus">Select A Campus</label>
+                  <select class="field" id="campus" name="campus" required>
+                    <option value="" selected disabled>Select an Option</option>
+                    <option>Bukit Timah Campus</option>
+                    <option>Valley Point Campus</option>
+                    <option>Upper Serangoon Road Campus</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="grade">Select Grade</label>
+                  <select class="field" id="grade" name="grade" required>
+                    <option value="" selected disabled>Select an Option</option>
+                    <option>Grade 1</option>
+                    <option>Grade 2</option>
+                    <option>Grade 3</option>
+                    <option>Grade 4</option>
+                    <option>Grade 5</option>
+                    <option>Grade 6</option>
+                    <option>Grade 7</option>
+                    <option>Grade 8</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="feedback">Feedback (Optional)</label>
+                  <textarea class="field" id="feedback" name="feedback" placeholder="Your feedback..." rows="4"></textarea>
+                </div>
+
+                <button class="button button-primary" id="submit-details-btn" type="submit">Submit Details</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section id="locations" class="section deferred-section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-title">Our Locations</h2>
+            <div class="section-bar"></div>
+            <p class="section-text">Discover our global presence and state-of-the-art facilities.</p>
+          </div>
+
+          <div class="location-grid">
+            <article class="location-card">
+              <div class="location-image">
+                <img
+                  src="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916355/Upper_bukit_timah_road_lwcicg.jpg"
+                  srcset="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_480/v1773916355/Upper_bukit_timah_road_lwcicg.jpg 480w, https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916355/Upper_bukit_timah_road_lwcicg.jpg 640w"
+                  sizes="(min-width: 760px) 33vw, 100vw" alt="Bukit Timah campus exterior" width="640" height="480"
+                  loading="lazy" decoding="async" />
+              </div>
+              <div class="card-body">
+                <h3>Bukit Timah Campus</h3>
+                <div class="meta-row">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M12 22s6-5.69 6-11a6 6 0 1 0-12 0c0 5.31 6 11 6 11Zm0-8.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Z" />
+                  </svg>
+                  <span>205 Upper Bukit Timah Rd, #02-01, Singapore 588181</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="location-card">
+              <div class="location-image">
+                <img
+                  src="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916298/Valley_point_hoaemw.jpg"
+                  srcset="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_480/v1773916298/Valley_point_hoaemw.jpg 480w, https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916298/Valley_point_hoaemw.jpg 640w"
+                  sizes="(min-width: 760px) 33vw, 100vw" alt="Valley Point campus exterior" width="640"
+                  height="480" loading="lazy" decoding="async" />
+              </div>
+              <div class="card-body">
+                <h3>Valley Point Campus</h3>
+                <div class="meta-row">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M12 22s6-5.69 6-11a6 6 0 1 0-12 0c0 5.31 6 11 6 11Zm0-8.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Z" />
+                  </svg>
+                  <span>491B, River Valley Road, Office Tower #17-01/04, Singapore 248373</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="location-card">
+              <div class="location-image">
+                <img
+                  src="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916351/Upper_serangoon_road_baxqby.jpg"
+                  srcset="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_480/v1773916351/Upper_serangoon_road_baxqby.jpg 480w, https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773916351/Upper_serangoon_road_baxqby.jpg 640w"
+                  sizes="(min-width: 760px) 33vw, 100vw" alt="Upper Serangoon Road campus exterior" width="640"
+                  height="480" loading="lazy" decoding="async" />
+              </div>
+              <div class="card-body">
+                <h3>Upper Serangoon Road Campus</h3>
+                <div class="meta-row">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M12 22s6-5.69 6-11a6 6 0 1 0-12 0c0 5.31 6 11 6 11Zm0-8.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Z" />
+                  </svg>
+                  <span>#02-01-13, 780, Upper Serangoon Road, Singapore 534649</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="programmes" class="section programmes deferred-section">
+        <div class="container programmes-grid">
+          <div>
+            <div class="section-head" style="text-align:left;margin:0 0 1.5rem;max-width:none;">
+              <h2 class="section-title">Programmes Offered</h2>
+              <div class="section-bar" style="margin:1rem 0 0;"></div>
+            </div>
+
+            <ul class="programmes-list">
+              <li class="programmes-item"><span class="dot"></span><span>Foundation Plus - Reception year
+                  program</span></li>
+              <li class="programmes-item"><span class="dot"></span><span>Cambridge Primary Programme (Grades 1 to
+                  5)</span></li>
+              <li class="programmes-item"><span class="dot"></span><span>Cambridge Lower Secondary Programme (Grades 6
+                  to 8)</span></li>
+              <li class="programmes-item"><span class="dot"></span><span>Cambridge IGCSE Programme (Grades 9 &amp;
+                  10)</span></li>
+            </ul>
+
+            <button class="button button-primary interested-btn" type="button">Enquire Now</button>
+          </div>
+
+          <div class="media-card">
+            <img src="https://cdn.lugc.link/b8619a43-624e-46a7-a4aa-b9b992a5b49d/-/preview/400x302/-/format/auto/"
+              alt="Students learning together" width="400" height="302" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section deferred-section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="section-bar"></div>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon-badge" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M12 2a7 7 0 0 0-4.75 12.14c.47.42.75 1.02.75 1.66V17a1 1 0 0 0 1 1h1v1.25A1.75 1.75 0 0 0 11.75 21h.5A1.75 1.75 0 0 0 14 19.25V18h1a1 1 0 0 0 1-1v-1.2c0-.64.28-1.24.75-1.66A7 7 0 0 0 12 2Zm2 13.14V16h-4v-.86a1 1 0 0 0-.33-.74A5 5 0 1 1 12 17h2v-1.86Z" />
+                </svg>
+              </div>
+              <h3>A thoughtfully designed learning journey</h3>
+              <ul class="feature-list">
+                <li>WiseTech CodeSpark</li>
+                <li>LingoLex (Language Enrichment Program)</li>
+                <li>Thematic CCAs &amp; ECAs covering sports and non-sports activities</li>
+                <li>Skill Enhancement Programs</li>
+              </ul>
+            </article>
+
+            <article class="feature-card">
+              <div class="icon-badge" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M12 2a1 1 0 0 1 1 1v1.07a7.97 7.97 0 0 1 2.64 1.09l.76-.76a1 1 0 1 1 1.41 1.41l-.76.76A7.97 7.97 0 0 1 18.93 11H20a1 1 0 1 1 0 2h-1.07a7.97 7.97 0 0 1-1.09 2.64l.76.76a1 1 0 0 1-1.41 1.41l-.76-.76A7.97 7.97 0 0 1 13 18.93V20a1 1 0 1 1-2 0v-1.07a7.97 7.97 0 0 1-2.64-1.09l-.76.76a1 1 0 1 1-1.41-1.41l.76-.76A7.97 7.97 0 0 1 5.07 13H4a1 1 0 1 1 0-2h1.07a7.97 7.97 0 0 1 1.09-2.64l-.76-.76A1 1 0 0 1 6.81 4.19l.76.76A7.97 7.97 0 0 1 11 4.07V3a1 1 0 0 1 1-1Zm0 5a5 5 0 1 0 0 10a5 5 0 0 0 0-10Z" />
+                </svg>
+              </div>
+              <h3>Technology-aided delivery mechanism</h3>
+              <ul class="feature-list">
+                <li>Students Management System</li>
+                <li>Learning Management System</li>
+              </ul>
+            </article>
+
+            <article class="feature-card">
+              <div class="icon-badge" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M16 11a3 3 0 1 0-2.83-4H10.8A3 3 0 1 0 8 12a3 3 0 0 0 2.8-2h2.37A3 3 0 0 0 16 11Zm-8 2a4 4 0 0 1 3.87 3H4.13A4 4 0 0 1 8 13Zm8 0a4 4 0 0 1 3.87 3h-7.74A4 4 0 0 1 16 13Zm-4 1.5A4.5 4.5 0 0 1 16.4 19H7.6A4.5 4.5 0 0 1 12 14.5Z" />
+                </svg>
+              </div>
+              <h3>Best in town fee structure with clear values</h3>
+              <ul class="feature-list">
+                <li>Students before Educators</li>
+                <li>Education before Business</li>
+                <li>Quality Education is Everyone's Right</li>
+              </ul>
+            </article>
+
+            <article class="feature-card">
+              <div class="icon-badge" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M5 3.5A2.5 2.5 0 0 1 7.5 1h9A2.5 2.5 0 0 1 19 3.5v17.25a.75.75 0 0 1-1.2.6L12 17.2l-5.8 4.15a.75.75 0 0 1-1.2-.6V3.5Zm2.5-.5a1 1 0 0 0-1 1v15.29l5.06-3.62a.75.75 0 0 1 .88 0l5.06 3.62V4a1 1 0 0 0-1-1h-9Z" />
+                </svg>
+              </div>
+              <h3>Serene and convenient location</h3>
+              <ul class="feature-list">
+                <li>Close to National Nature Reserves</li>
+                <li>5 minutes walk from Beauty World MRT station on the Blue line</li>
+                <li>Strategically located near many sports facilities</li>
+              </ul>
+            </article>
+          </div>
+
+          <div style="margin-top:2rem;text-align:center;">
+            <button class="button button-primary interested-btn" type="button">Enquire Now</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="admissions" class="section admissions deferred-section">
+        <div class="container admissions-grid">
+          <div>
+            <div class="section-head" style="text-align:left;margin:0 0 1.5rem;max-width:none;">
+              <h2 class="section-title">Admission Process</h2>
+              <div class="section-bar" style="margin:1rem 0 0;"></div>
+            </div>
+
+            <ul class="step-list">
+              <li class="step-item">
+                <div class="step-number is-accent">1</div>
+                <div>
+                  <h3 class="step-title">Online/In-person Application</h3>
+                  <p class="step-text">Complete the application form in person or through online submission.</p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-number">2</div>
+                <div>
+                  <h3 class="step-title">Document Submission</h3>
+                  <p class="step-text">Submit the supporting documents to our admissions team.</p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-number">3</div>
+                <div>
+                  <h3 class="step-title">Assessment &amp; Visit</h3>
+                  <p class="step-text">Schedule an aptitude test and a visit to the school.</p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-number">4</div>
+                <div>
+                  <h3 class="step-title">Student Contract</h3>
+                  <p class="step-text">Upon acceptance of a place at Wise Oaks, execute the student contract.</p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-number">5</div>
+                <div>
+                  <h3 class="step-title">Fee Payment</h3>
+                  <p class="step-text">Pay the applicable fees.</p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-number">6</div>
+                <div>
+                  <h3 class="step-title">Final Documentation</h3>
+                  <p class="step-text">Submit the final documentation before school starts.</p>
+                </div>
+              </li>
+            </ul>
+
+            <div style="margin-top:1.75rem;">
+              <button class="button button-primary interested-btn" type="button">Enquire Now</button>
+            </div>
+          </div>
+
+          <div class="media-card">
+            <img
+              src="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_960/v1773917909/image.jpg_lpo6kc.jpg"
+              srcset="https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_640/v1773917909/image.jpg_lpo6kc.jpg 640w, https://res.cloudinary.com/dw9v7jjrq/image/upload/f_auto,q_auto,w_960/v1773917909/image.jpg_lpo6kc.jpg 960w"
+              sizes="(min-width: 760px) 38vw, 100vw" alt="Students working together on a project" width="960"
+              height="720" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section class="section cta-band deferred-section">
+      <div class="container cta-panel">
+        <h2 class="cta-title">Still have doubts? Schedule a 15 minute online session with us.</h2>
+        <button class="button button-primary interested-btn" type="button">Yes I'm Interested</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 | Wise Oaks International School</p>
+      </div>
+    </footer>
+
+    <div class="floating-cta">
+      <button class="button button-primary interested-btn" type="button">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor"
+            d="M5 3h10a2 2 0 0 1 2 2v1h2a1 1 0 1 1 0 2h-2v8a2 2 0 0 1-2 2h-1v2a1 1 0 0 1-1.71.7L9.59 18H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 2v11h5a1 1 0 0 1 .71.29L12 17.59V17a1 1 0 0 1 1-1h2V5H5Z" />
+        </svg>
+        Enquire Now
+      </button>
+    </div>
+  </div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    (() => {
       const form = document.getElementById('multi-step-form');
       const step1 = document.getElementById('step-1');
       const step2 = document.getElementById('step-2');
       const proceedBtn = document.getElementById('proceed-btn');
-      const formTitle = document.querySelector('h3.text-2xl.font-bold.mb-2');
+      const submitBtn = document.getElementById('submit-details-btn');
+      const formTitle = document.querySelector('[data-form-title]');
+
+      if (!form || !step1 || !step2 || !proceedBtn || !submitBtn) {
+        return;
+      }
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       async function submitEnquiry(step, data) {
         const body = {
@@ -30,597 +1046,120 @@
         try {
           const response = await fetch('/api/submit-enquiry', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
           });
-          
+
           if (!response.ok) {
             const errorData = await response.json().catch(() => null);
             console.error('API submission failed:', response.status, errorData);
             return false;
           }
-          
-          return response.ok;
+
+          return true;
         } catch (error) {
           console.error('API network/fetch error:', error);
           return false;
         }
       }
 
-      // STEP 1: Send data when user clicks "Proceed"
+      function getFirstInvalidField(fields) {
+        return fields.find((field) => !field.checkValidity());
+      }
+
+      function scrollToForm() {
+        form.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      }
+
       proceedBtn.addEventListener('click', async () => {
-        const step1Inputs = step1.querySelectorAll('input');
-        let allValid = true;
+        const step1Inputs = Array.from(step1.querySelectorAll('input'));
+        const invalidField = getFirstInvalidField(step1Inputs);
 
-        step1Inputs.forEach(input => {
-          if (!input.checkValidity()) {
-            input.reportValidity();
-            allValid = false;
-          }
-        });
-
-        if (allValid) {
-          // Collect Step 1 data
-          const data = {};
-          step1Inputs.forEach(input => {
-            data[input.name] = input.value;
-          });
-
-          const originalText = proceedBtn.textContent;
-          proceedBtn.textContent = "Saving...";
-          proceedBtn.disabled = true;
-
-          try {
-            const sent = await submitEnquiry('step1', data);
-            if (!sent) console.warn('Step 1 failed, but form will proceed');
-          } catch (e) {
-            console.error('Step 1 submission error:', e);
-          }
-
-          proceedBtn.textContent = originalText;
-          proceedBtn.disabled = false;
-          step1.classList.add('hidden');
-          step2.classList.remove('hidden');
-          if (formTitle) formTitle.textContent = 'Additional Information';
+        if (invalidField) {
+          invalidField.reportValidity();
+          invalidField.focus();
+          return;
         }
-      });
 
-      // STEP 2: Send data when user clicks "Submit Details"
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const step2Inputs = step2.querySelectorAll('input, select, textarea');
-        let allValid = true;
-
-        step2Inputs.forEach(input => {
-          if (input.required && !input.value) {
-            input.reportValidity();
-            allValid = false;
-          }
-        });
-
-        if (!allValid) return;
-
-        // Collect Step 2 data
         const data = {};
-        step2Inputs.forEach(input => {
+        step1Inputs.forEach((input) => {
           data[input.name] = input.value;
         });
 
-        // Include email from Step 1 (useful for matching/updating contact in HubSpot)
+        const originalText = proceedBtn.textContent;
+        proceedBtn.textContent = 'Saving...';
+        proceedBtn.disabled = true;
+
+        try {
+          const sent = await submitEnquiry('step1', data);
+          if (!sent) {
+            console.warn('Step 1 failed, but form will proceed.');
+          }
+        } catch (error) {
+          console.error('Step 1 submission error:', error);
+        }
+
+        proceedBtn.textContent = originalText;
+        proceedBtn.disabled = false;
+        step1.hidden = true;
+        step2.hidden = false;
+
+        if (formTitle) {
+          formTitle.textContent = 'Additional Information';
+        }
+      });
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const step2Inputs = Array.from(step2.querySelectorAll('input, select, textarea'));
+        const invalidField = getFirstInvalidField(step2Inputs.filter((field) => field.required || field.value));
+
+        if (invalidField) {
+          invalidField.reportValidity();
+          invalidField.focus();
+          return;
+        }
+
+        const data = {};
+        step2Inputs.forEach((input) => {
+          data[input.name] = input.value;
+        });
+
         const email = form.querySelector('input[name="email"]');
         if (email && email.value) {
           data.email = email.value;
         }
 
-        const submitBtn = document.getElementById('submit-details-btn');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = "Submitting...";
+        submitBtn.textContent = 'Submitting...';
         submitBtn.disabled = true;
 
         try {
           const ok = await submitEnquiry('step2', data);
           if (ok) {
             window.location.href = '/thank-you/';
-          } else {
-            alert('Submission failed, please try again.');
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
+            return;
           }
+
+          alert('Submission failed, please try again.');
         } catch (error) {
           console.error('Step 2 submission error:', error);
           alert('Submission failed, please try again.');
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
         }
+
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       });
 
-      // Add event listeners to all "I'm Interested" buttons
-      document.querySelectorAll('.interested-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          document.getElementById('multi-step-form').scrollIntoView({ behavior: 'smooth' });
-        });
+      document.querySelectorAll('.interested-btn').forEach((button) => {
+        button.addEventListener('click', scrollToForm);
       });
-    });
+    })();
   </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-    rel="stylesheet" />
-  <style>
-    body {
-      font-family: "Public Sans", sans-serif;
-    }
-
-    /* CSS Variables for color theme */
-    :root {
-      --accent: #ff0000;
-      --primary: #000080;
-      --background-light: #f9f9f9;
-      --background-dark: #0f172a;
-    }
-
-    /* Custom utility classes for missing colors */
-    .bg-accent {
-      background-color: var(--accent);
-    }
-
-    .text-accent {
-      color: var(--accent);
-    }
-
-    .text-primary {
-      color: var(--primary);
-    }
-
-    .bg-primary {
-      background-color: var(--primary);
-    }
-
-    .bg-background-light {
-      background-color: var(--background-light);
-    }
-
-    .bg-background-dark {
-      background-color: var(--background-dark);
-    }
-  </style>
-</head>
-
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-    <header
-      class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between">
-          <div class="flex items-center gap-2"><img alt="Wise Oaks Logo" class="w-auto h-12 sm:h-16"
-              src="https://cdn.lugc.link/7b27182c-382d-4a1b-8782-7a6cf933c2ff/-/preview/212x75/-/format/auto/" /></div>
-          <div class="flex items-center gap-2 sm:gap-4">
-            <button
-              class="text-white px-4 sm:px-6 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all bg-red-600 hover:bg-red-700 interested-btn shadow-md">Enquire
-              Now</button>
-          </div>
-        </div>
-      </div>
-    </header>
-    <main class="flex-1">
-      <section class="relative min-h-[600px] flex items-center py-12 lg:py-20">
-        <div class="absolute inset-0 z-0">
-          <div class="absolute inset-0 bg-black/50 z-10"></div>
-          <img alt="Hero Background" class="w-full h-full object-cover"
-            data-alt="Modern university campus building with students walking"
-            src="https://cdn.lugc.link/23b5c3a4-c33c-47ea-882a-e294fcedd25e/-/format/auto/-/stretch/off/-/resize/x1280/" />
-        </div>
-        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-8 lg:mt-0">
-          <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div class="order-2 lg:order-2">
-              <div
-                class="bg-white dark:bg-slate-900 p-5 sm:p-8 rounded-xl shadow-2xl max-w-md mx-auto lg:mx-0 border border-slate-100 dark:border-slate-800">
-                <h3 class="text-xl md:text-2xl font-bold mb-2">Enquire Now</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 text-xs md:text-sm">Start your journey with us today.
-                  Fill out the form below to get started.</p>
-                <form class="space-y-4" id="multi-step-form">
-                  <div class="space-y-4" id="step-1">
-                    <div>
-                      <label
-                        class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name</label>
-                      <input
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="firstname" placeholder="Your Name" required="" type="text" />
-                    </div>
-                    <div>
-                      <label
-                        class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Email</label>
-                      <input
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="email" placeholder="email@example.com" required="" type="email" />
-                    </div>
-                    <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact
-                        no.</label>
-                      <input
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="phone_number" placeholder=" 0000 0000" required="" type="tel" maxlength="11"
-                        title="Please enter a valid number without country code" />
-                    </div>
-                    <button
-                      class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 bg-red-600 hover:bg-red-700"
-                      id="proceed-btn" type="button">Proceed</button>
-                  </div>
-                  <div class="space-y-4 hidden" id="step-2">
-                    <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name of
-                        Student</label>
-                      <input
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="student_name" placeholder="Student's Full Name" required="" type="text" />
-                    </div>
-                    <div>
-                      <label
-                        class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Residential
-                        Status</label>
-                      <select
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="residential_status" required="">
-                        <option disabled="" selected="" value="">Select an Option</option>
-                        <option>Singapore Citizen</option>
-                        <option>Singapore Permanent Resident</option>
-                        <option>Dependent Pass</option>
-                        <option>Long Term Visit Visa</option>
-                        <option>Student Pass</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select a
-                        campus</label>
-                      <select
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="campus" required="">
-                        <option disabled="" selected="" value="">Select an Option</option>
-                        <option>Bukit Timah Campus</option>
-                        <option>Valley Point Campus</option>
-                        <option>Upper Serangoon Road Campus</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Select
-                        Grade</label>
-                      <select
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="grade" required="">
-                        <option disabled="" selected="" value="">Select an Option</option>
-                        <option>Grade 1</option>
-                        <option>Grade 2</option>
-                        <option>Grade 3</option>
-                        <option>Grade 4</option>
-                        <option>Grade 5</option>
-                        <option>Grade 6</option>
-                        <option>Grade 7</option>
-                        <option>Grade 8</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Feedback
-                        (Optional)</label>
-                      <textarea
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="feedback" placeholder="Your feedback..." rows="3"></textarea>
-                    </div>
-                    <button
-                      class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-red-600/20 bg-red-600 hover:bg-red-700"
-                      id="submit-details-btn" type="submit">Submit Details</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="order-1 text-white text-center lg:text-left lg:order-1 pt-4 md:pt-0">
-              <span
-                class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase mb-4 bg-accent">Wise
-                Oaks International School</span>
-              <h1 class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-4 md:mb-6">Give Wings of reality
-                to boundless dreams of your child with <br class="hidden sm:inline"> <span class="text-accent">Wise
-                  Oaks</span></h1>
-              <p
-                class="text-base md:text-lg lg:text-xl text-slate-200 mb-6 md:mb-8 max-w-2xl lg:mx-0 mx-auto leading-relaxed">
-                We believe that your child deserves the best of learning and we provide it in the most affordable way.
-              </p>
-              <!-- <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start">
-                <div class="flex items-center gap-2"><span
-                    class="material-symbols-outlined text-accent">menu_book</span><span
-                    class="font-medium text-sm sm:text-base">Robust Cambridge curriculum</span></div>
-                <div class="flex items-center gap-2"><span
-                    class="material-symbols-outlined text-accent">calculate</span><span
-                    class="font-medium text-sm sm:text-base">Proven Singapore Maths</span></div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="locations" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 text-black">
-        <div class="text-center mb-8 md:mb-12">
-          <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-black">Our Locations</h2>
-          <div class="w-16 h-1 bg-accent mx-auto rounded-full mb-4"></div>
-          <p class="text-slate-900 max-w-2xl mx-auto text-sm md:text-base">Discover our global presence and
-            state-of-the-art facilities.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
-              <img alt="South Campus"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                data-alt="BUKIT CAMPUS"
-                src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916355/Upper_bukit_timah_road_lwcicg.jpg" />
-              <div class="absolute top-4 left-4">
-              </div>
-            </div>
-            <h3 class="text-xl font-bold mb-2">BUKIT TIMAH CAMPUS</h3>
-            <p class="text-slate-900 flex items-center gap-1"><span
-                class="material-symbols-outlined text-sm">location_on</span> 205 Upper Bukit Timah Rd, #02-01, Singapore
-              588181</p>
-          </div>
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
-              <img alt="South Campus"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                data-alt="Technological park with modern architecture in Austin Texas"
-                src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916298/Valley_point_hoaemw.jpg" />
-              <div class="absolute top-4 left-4">
-              </div>
-            </div>
-            <h3 class="text-xl font-bold mb-2">VALLEY POINT CAMPUS</h3>
-            <p class="text-slate-900 flex items-center gap-1"><span
-                class="material-symbols-outlined text-sm">location_on</span> 491B, River Valley Road, Office Tower
-              #17-01/04, Singapore 248373</p>
-          </div>
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden rounded-xl aspect-[4/3] mb-4">
-              <img alt="International Wing"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                data-alt="Victorian style university building in London UK"
-                src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773916351/Upper_serangoon_road_baxqby.jpg" />
-              <div class="absolute top-4 left-4">
-                <!-- <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold uppercase">SINGAPORE</span> -->
-              </div>
-            </div>
-            <h3 class="text-xl font-bold mb-1">UPPER SERANGOON ROAD CAMPUS</h3>
-            <p class="text-slate-900 flex items-center gap-1"><span
-                class="material-symbols-outlined text-sm">location_on</span> #02-01-13, 780, Upper Serangoon Road,
-              Singapore - 534649</p>
-          </div>
-        </div>
-      </section>
-      <section id="programmes" class="bg-[#000080] py-12 md:py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div class="text-white">
-              <h2 class="text-2xl md:text-4xl font-bold mb-2">Programmes Offered</h2>
-              <div class="w-24 md:w-40 h-1 bg-red-600 mb-6 md:mb-10"></div>
-              <ul class="space-y-3 md:space-y-4 mb-8 md:mb-10">
-                <li class="flex items-start gap-3">
-                  <span class="mt-1.5 w-1.5 h-1.5 bg-white rounded-full shrink-0"></span>
-                  <span class="text-base md:text-lg">Foundation Plus - Reception year program</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="mt-1.5 w-1.5 h-1.5 bg-white rounded-full shrink-0"></span>
-                  <span class="text-base md:text-lg">Cambridge Primary Programme (Grades 1 to 5)</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="mt-1.5 w-1.5 h-1.5 bg-white rounded-full shrink-0"></span>
-                  <span class="text-base md:text-lg">Cambridge Lower Secondary Programme (Grades 6 to 8)</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="mt-1.5 w-1.5 h-1.5 bg-white rounded-full shrink-0"></span>
-                  <span class="text-base md:text-lg">Cambridge IGCSE Programme (Grades 9 &amp; 10)</span>
-                </li>
-              </ul>
-              <button
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg shadow-red-600/20 interested-btn mx-auto block lg:mx-0">
-                Enquire Now
-              </button>
-            </div>
-            <div class="relative">
-              <img alt="Puzzle image" class="w-full h-auto rounded-lg shadow-2xl"
-                src="https://cdn.lugc.link/b8619a43-624e-46a7-a4aa-b9b992a5b49d/-/preview/400x302/-/format/auto/" />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="bg-background-light py-12 md:py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-10 md:mb-16">
-            <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-black">Why Choose Us</h2>
-            <div class="w-16 h-1 bg-accent mx-auto rounded-full"></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto">
-            <div
-              class="bg-slate-50 p-6 md:p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
-              <div class="w-20 h-20 flex items-center justify-center mb-6">
-                <span class="material-symbols-outlined text-primary text-3xl text-5xl">lightbulb</span>
-              </div>
-              <h4 class="font-bold text-lg mb-2 text-black">Apart from Cambridge based curriculum and Singapore
-                Mathematics, our programmes are thoughtfully designed</h4>
-              <p class="text-black text-sm leading-relaxed">
-              <ul class="space-y-1 mt-4">
-                <li class="flex items-start justify-center gap-2 text-black">- WiseTech CodeSpark</li>
-                <li class="flex items-start justify-center gap-2 text-black">- LingoLex (Language Enrichment Program)
-                </li>
-                <li class="flex items-start justify-center gap-2 text-black">- Thematic CCAs &amp; ECAs includes both
-                  sports and non sports activities.</li>
-                <li class="flex items-start justify-center gap-2 text-black">- Skill Enhancement Programs</li>
-              </ul>
-              </p>
-            </div>
-            <div
-              class="bg-slate-50 p-6 md:p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
-              <div class="w-20 h-20 flex items-center justify-center mb-6">
-                <span class="material-symbols-outlined text-primary text-3xl text-5xl">settings_suggest</span>
-              </div>
-              <h4 class="font-bold text-lg mb-2 text-black">Technology aided delivery mechanism</h4>
-              <p class="text-black text-sm leading-relaxed">
-              <ul class="space-y-1 mt-4">
-                <li class="flex items-start justify-center gap-2 text-black">- Students Management System</li>
-                <li class="flex items-start justify-center gap-2 text-black">- Learning Management System</li>
-              </ul>
-              </p>
-            </div>
-            <div
-              class="bg-slate-50 p-6 md:p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
-              <div class="w-20 h-20 flex items-center justify-center mb-6">
-                <span class="material-symbols-outlined text-primary text-3xl text-5xl">groups</span>
-              </div>
-              <h4 class="font-bold text-lg mb-2 text-black">Best in Town Fee structure underscoring our philosophy</h4>
-              <p class="text-black text-sm leading-relaxed">
-              <ul class="space-y-1 mt-4">
-                <li class="flex items-start justify-center gap-2 text-black">- Students before Educators</li>
-                <li class="flex items-start justify-center gap-2 text-black">- Education before Business and</li>
-                <li class="flex items-start justify-center gap-2 text-black">- Quality Education Everyone's Right</li>
-              </ul>
-              </p>
-            </div>
-            <div
-              class="bg-slate-50 p-6 md:p-10 rounded-2xl border-2 border-amber-400 flex flex-col items-center text-center shadow-sm">
-              <div class="w-20 h-20 flex items-center justify-center mb-6">
-                <span class="material-symbols-outlined text-primary text-3xl text-5xl">auto_stories</span>
-              </div>
-              <h4 class="font-bold text-lg mb-2 text-black">Serene and Convenient Location</h4>
-              <p class="text-black text-sm leading-relaxed">
-              <ul class="space-y-1 mt-4">
-                <li class="flex items-start justify-center gap-2 text-black">- Close to National Nature Reserves</li>
-                <li class="flex items-start justify-center gap-2 text-black">- 5 minutes walk from Beauty World MRT
-                  station on Blue line</li>
-                <li class="flex items-start justify-center gap-2 text-black">- Strategically located near many sports
-                  facilities</li>
-              </ul>
-              </p>
-            </div>
-          </div>
-          <div class="mt-12 md:mt-16 text-center">
-            <button
-              class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-xl transition-all shadow-lg shadow-red-600/20 interested-btn mx-auto">
-              Enquire Now
-            </button>
-          </div>
-        </div>
-      </section>
-      <section id="admissions" class="bg-[#000080] py-12 md:py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row gap-10 md:gap-12 items-center">
-            <div class="flex-1">
-              <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-4 md:mb-6 text-white">Admission Process</h2>
-              <div class="w-24 md:w-40 h-1 bg-red-600 mb-8 md:mb-10"></div>
-              <div class="space-y-6 md:space-y-8">
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 text-white rounded-full flex items-center justify-center font-bold bg-accent">
-                    1</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Online/In-person Application</h5>
-                    <p class="text-slate-300">Complete the application form in person or Online submission.</p>
-                  </div>
-                </div>
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">
-                    2</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Document Submission</h5>
-                    <p class="text-slate-300">Submit the supporting documents to our Admissions team.</p>
-                  </div>
-                </div>
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">
-                    3</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Assessment &amp; Visit</h5>
-                    <p class="text-slate-300">Schedule - Aptitude Test &amp; a Visit to the school.</p>
-                  </div>
-                </div>
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">
-                    4</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Student Contract</h5>
-                    <p class="text-slate-300">Upon acceptance of a place at Wise Oaks, execute the student contract.</p>
-                  </div>
-                </div>
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">
-                    5</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Fee Payment</h5>
-                    <p class="text-slate-300">Pay the applicable fees.</p>
-                  </div>
-                </div>
-                <div class="flex gap-4 md:gap-6">
-                  <div
-                    class="flex-shrink-0 w-10 h-10 bg-white text-primary rounded-full flex items-center justify-center font-bold">
-                    6</div>
-                  <div>
-                    <h5 class="font-bold text-lg mb-1 text-white">Final Documentation</h5>
-                    <p class="text-slate-300">Submit the final documentation before school starts.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="mt-10 lg:hidden">
-                <button
-                  class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-red-600/20 interested-btn w-full text-center">
-                  Enquire Now
-                </button>
-              </div>
-            </div>
-            <div class="flex-1 w-full">
-              <div class="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img alt="Students" class="w-full h-full object-cover"
-                  data-alt="Group of diverse students working together on a project"
-                  src="https://res.cloudinary.com/dw9v7jjrq/image/upload/v1773917909/image.jpg_lpo6kc.jpg" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <section class="bg-white dark:bg-background-dark py-12 md:py-16 border-t border-slate-200 dark:border-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
-          <div class="max-w-2xl mx-auto md:mx-0">
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-black leading-tight text-center md:text-left">
-              Still Have doubts,<br class="hidden md:inline" />Schedule a 15 minute online session with us.</h3>
-          </div>
-          <div class="flex-shrink-0">
-            <button
-              class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-xl transition-all shadow-lg shadow-red-600/20 whitespace-nowrap interested-btn">
-              Yes I'm Interested
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <footer class="bg-[#f9f9f9] text-slate-600 py-12 border-t border-slate-200 bg-[#f0f0f0] pt-12 pb-24 md:pb-4">
-
-      <div class="text-center w-full py-6">
-        <p class="text-slate-600 text-lg">
-          Copyright © 2026 | Wise Oaks International School
-        </p>
-      </div>
-  </div>
-  </footer>
-  </div>
-
-  <!-- Mobile Floating Enquire Button -->
-  <div
-    class="fixed bottom-0 left-0 w-full z-[100] md:hidden px-4 pb-4 pointer-events-none bg-gradient-to-t from-white via-white/80 to-transparent pt-10">
-    <button
-      class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-2xl shadow-xl shadow-red-600/40 transition-all interested-btn border border-white/20 flex justify-center items-center gap-2 pointer-events-auto">
-      <span class="material-symbols-outlined text-lg">edit_document</span>
-      Enquire Now
-    </button>
-  </div>
 </body>
 
 </html>
