@@ -35,9 +35,16 @@
             },
             body: JSON.stringify(body)
           });
+          
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            console.error('API submission failed:', response.status, errorData);
+            return false;
+          }
+          
           return response.ok;
         } catch (error) {
-          console.error('API submission error:', error);
+          console.error('API network/fetch error:', error);
           return false;
         }
       }

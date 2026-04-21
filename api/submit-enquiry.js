@@ -33,8 +33,17 @@ function pickAllowedFields(data, allowedFields) {
       continue;
     }
 
+    let propertyName = fieldName;
+    if (fieldName === 'phone_number') {
+      propertyName = 'phone';
+    } else if (fieldName === 'student_name') {
+      propertyName = 'students_name';
+    } else if (fieldName === 'feedback') {
+      propertyName = 'feedbackparent';
+    }
+
     fields.push({
-      property: fieldName,
+      property: propertyName,
       value: trimmed
     });
   }
@@ -107,12 +116,12 @@ module.exports = async function handler(request, response) {
     if (!hubspotResponse.ok) {
       const details = await hubspotResponse.text();
       console.error("HubSpot Contacts API submission failed", details);
-      return json(response, 502, { ok: false, error: "Submission failed" });
+      return json(response, hubspotResponse.status, { ok: false, error: "HubSpot API Error", details });
     }
 
     return json(response, 200, { ok: true });
   } catch (error) {
     console.error("HubSpot proxy error", error);
-    return json(response, 502, { ok: false, error: "Submission failed" });
+    return json(response, 500, { ok: false, error: "Server Error", details: error.toString() });
   }
 };
