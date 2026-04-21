@@ -61,16 +61,19 @@
             data[input.name] = input.value;
           });
 
-          // Send Step 1 data to proxy
-          submitEnquiry('step1', data).then(sent => {
-            if (!sent) {
-              console.warn('Step 1 submission failed, but form will proceed');
-            }
-          }).catch(error => {
-            console.error('Step 1 submission error:', error);
-          });
+          const originalText = proceedBtn.textContent;
+          proceedBtn.textContent = "Saving...";
+          proceedBtn.disabled = true;
 
-          // Always proceed to Step 2, regardless of HubSpot status
+          try {
+            const sent = await submitEnquiry('step1', data);
+            if (!sent) console.warn('Step 1 failed, but form will proceed');
+          } catch (e) {
+            console.error('Step 1 submission error:', e);
+          }
+
+          proceedBtn.textContent = originalText;
+          proceedBtn.disabled = false;
           step1.classList.add('hidden');
           step2.classList.remove('hidden');
           if (formTitle) formTitle.textContent = 'Additional Information';
@@ -104,12 +107,25 @@
           data.email = email.value;
         }
 
+        const submitBtn = document.getElementById('submit-details-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Submitting...";
+        submitBtn.disabled = true;
+
         try {
-          await submitEnquiry('step2', data);
+          const ok = await submitEnquiry('step2', data);
+          if (ok) {
+            window.location.href = '/thank-you/';
+          } else {
+            alert('Submission failed, please try again.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }
         } catch (error) {
           console.error('Step 2 submission error:', error);
-        } finally {
-          window.location.href = '/thank-you/';
+          alert('Submission failed, please try again.');
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
         }
       });
 
@@ -209,24 +225,12 @@
                         name="firstname" placeholder="Your Name" required="" type="text" />
                     </div>
                     <div>
-                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name of
-                        Student</label>
-                      <input
-                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                        name="student_name" placeholder="Student's Full Name" required="" type="text" />
-                    </div>
-                    <div>
                       <label
                         class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Email</label>
                       <input
                         class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                         name="email" placeholder="email@example.com" required="" type="email" />
                     </div>
-                    <button
-                      class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 bg-red-600 hover:bg-red-700"
-                      id="proceed-btn" type="button">Proceed</button>
-                  </div>
-                  <div class="space-y-4 hidden" id="step-2">
                     <div>
                       <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact
                         no.</label>
@@ -234,6 +238,18 @@
                         class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                         name="phone_number" placeholder=" 0000 0000" required="" type="tel" maxlength="11"
                         title="Please enter a valid number without country code" />
+                    </div>
+                    <button
+                      class="w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 bg-red-600 hover:bg-red-700"
+                      id="proceed-btn" type="button">Proceed</button>
+                  </div>
+                  <div class="space-y-4 hidden" id="step-2">
+                    <div>
+                      <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Name of
+                        Student</label>
+                      <input
+                        class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                        name="student_name" placeholder="Student's Full Name" required="" type="text" />
                     </div>
                     <div>
                       <label

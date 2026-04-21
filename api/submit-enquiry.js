@@ -1,11 +1,11 @@
 const STEP_CONFIG = {
   step1: {
-    allowedFields: ["firstname", "student_name", "email"]
+    allowedFields: ["firstname", "email", "phone_number"]
   },
   step2: {
     allowedFields: [
       "email",
-      "phone_number",
+      "student_name",
       "residential_status",
       "campus",
       "grade",
